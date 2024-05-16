@@ -29,4 +29,6 @@ It should work with any connection via `fabric.connection.Connection`.
 - [ ] Add dependency management
 - [ ] Port over some more functionality from `scp.py`
 - [ ] Make more `Transport`-object-like.
+- [ ] Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
+- [ ] Define version compatibility
 
