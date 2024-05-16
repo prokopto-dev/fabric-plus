@@ -18,7 +18,7 @@ What I needed was a way to do the same thing with a connection.
 
 ## Features
 
-Most important to me, it works with the `SSHJumpClient` as defined by @andrewschenck in his `paramiko-jump`.
+Most important to me, it works with the `SSHJumpClient` as defined by [@andrewschenck](https://github.com/andrewschenck) in his [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump).
 
 It should work with any connection via `fabric.connection.Connection`.
 
