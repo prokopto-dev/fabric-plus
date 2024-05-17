@@ -32,6 +32,7 @@ What I needed was a way to do the same thing with a connection.
 ## License Addendum
 
 - [`scp.py`](https://github.com/jbardin/scp.py) is used by import under the LGPL v2.1 license, and this notice is in accordance with that license.
+- [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) used under Apache License 2.0, see `fabricplus/paramiko_modifications/client.py` for license details.
 - [`fabric`](https://github.com/fabric/fabric) is used, and falls under a BSD-2-Clause license, which doesn't restrict its use as an imported library, but is noted here anyways.
 
 ## TODO
@@ -42,9 +43,9 @@ What I needed was a way to do the same thing with a connection.
 - [ ] Add installation instructions to README.md
 - [x] Add dependency management - Done with `poetry`
 - [ ] Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
-- [ ] Make more `Transport`-object-like.
-- [ ] Possibly expand to be drop-in replacement for `Transport`, with added `scp` functionality.
-- [ ] Maybe add a connection object wrapper that does similar things, adding `scp` functionality.
+- [x] Make more `Transfer`-object-like.
+- [x] Possibly expand to be drop-in replacement for `Transfer`, with added `scp` functionality.
+- [x] Maybe add a connection object wrapper that does similar things, adding `scp` functionality.
 - [x] Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
 - [ ] Define version compatibility
 - [ ] Add jump-run and `su` commands for connection, including notes about how it works with parallelism
