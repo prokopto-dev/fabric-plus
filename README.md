@@ -9,6 +9,7 @@ I may eventually be forking out a version of `paramiko` and `fabric` for the pur
 ## Notes:
 
 - Requires Python 3.8+; typing has been added pretty aggressively throughout the library, and as a result, you will need to have a slightly newer version of python than is technically required by the base `Fabric` library.
+- Changed default host key handling to do "Warning" instead of "AutoAdd" (default currently in `Fabric`)
 
 ## Goals
 

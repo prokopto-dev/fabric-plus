@@ -14,9 +14,15 @@ class ConnectionPlus(Connection):
         """
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
-        self.client = SSHJumpClient()
-        self.client.set_missing_host_key_policy(WarningPolicy())
-        self.client.load_system_host_keys()
+        _client = self.__setup_jumphost(jumphost_target)
+        if _client is not None:
+            _client.set_missing_host_key_policy(WarningPolicy())
+            _client.load_system_host_keys()
+        
+        
+    
+    def __setup_jumphost(self, jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]]) -> SSHJumpClient:
+        self.client = jumphost_target
     
     @opens
     def scp(self):
