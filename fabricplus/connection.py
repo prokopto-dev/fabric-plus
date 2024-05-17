@@ -27,6 +27,20 @@ class ConnectionPlus(Connection):
     def __connect_client(self,
                          client: Union[SSHJumpClient, SSHClient],
                          username: Optional[str] = None) -> None:
+        """
+        Connect a client object (SSHJumpClient or SSHClient) to
+        the target host.
+        
+        This is mostly used to provide some ability to pass in
+        kwargs.
+        
+        Args:
+            client (Union[SSHJumpClient, SSHClient]): The client object to connect.
+            username (Optional[str], optional): The username to use for the connection. Defaults to None.
+
+        Raises:
+            ValueError: If the connect() method is given conflicting arguments.
+        """
         # Short-circuit
         if self.is_connected:
             return
@@ -134,13 +148,15 @@ class ConnectionPlus(Connection):
 
     def get(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
         if self.__scp is True:
-            return TransferPlus(self).get(*args, **kwargs)
+            # Ignoring type because apparently it doesn't like Self@ConnectionPlus
+            return TransferPlus(self).get(*args, **kwargs) # type: ignore
         else:
             return super().get(*args, **kwargs)
         
         
     def put(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
         if self.__scp is True:
-            return TransferPlus(self).put(*args, **kwargs)
+            # Ignoring type because apparently it doesn't like Self@ConnectionPlus
+            return TransferPlus(self).put(*args, **kwargs) # type: ignore
         else:
             return super().put(*args, **kwargs)
