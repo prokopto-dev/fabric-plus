@@ -1,15 +1,22 @@
 from fabric.connection import Connection, opens
 from fabricplus.transfer import TransferPlus
+from paramiko import WarningPolicy, SSHClient
 from fabricplus.paramiko_modifications.client import SSHJumpClient
 from scp import SCPClient
 
-from typing import Optional
+from typing import Optional, Union
 
 class ConnectionPlus(Connection):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, jumphost_target: Optional[Union[SSHJumpClient, SSHClient]] = None, **kwargs):
+        """
+        Args:
+        
+        """
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
         self.client = SSHJumpClient()
+        self.client.set_missing_host_key_policy(WarningPolicy())
+        self.client.load_system_host_keys()
     
     @opens
     def scp(self):

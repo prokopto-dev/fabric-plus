@@ -48,3 +48,4 @@ What I needed was a way to do the same thing with a connection.
 - [ ] Define version compatibility
 - [ ] Add jump-run and `su` commands for connection, including notes about how it works with parallelism
 - [ ] Add notes on how to run things in parallel in docs
+- [ ] Finish allowing a jumphost to passed into the ConnectionPlus object so we can go ahead construct those connections; should allow several types of objects to be passed in, including an IP/url, Connection/Plus, or SSH/JumpClient
