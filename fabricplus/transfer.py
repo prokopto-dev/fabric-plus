@@ -2,9 +2,7 @@ import fabric
 from fabric.transfer import Transfer
 import scp
 
-from typing import Optional, Any, TYPE_CHECKING, Union
-if TYPE_CHECKING:
-    from fabricplus.connection import ConnectionPlus
+from typing import Type
     
     
 
@@ -16,13 +14,13 @@ class TransferPlus(Transfer):
     """
 
     def __init__(self,
-                 connection: Union[fabric.Connection, ConnectionPlus]) -> None:
-        self.connection: Union[fabric.Connection, ConnectionPlus] = connection
+                 connection: Type[fabric.Connection]) -> None:
+        self.connection: Type[fabric.Connection] = connection
 
     @property
-    def scp(self):
+    def scp(self) -> scp.SCPClient:
         try:
-            return self.connection.scp
+            return self.connection.scp() # type: ignore
         except AttributeError:
             raise AttributeError("The base fabric Connection object does not have an SCP client"
                                  ", use ConnectionPlus instead.")
