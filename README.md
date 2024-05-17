@@ -6,6 +6,10 @@ See [`fabric`](https://github.com/fabric/fabric) for more details, if interested
 
 I may eventually be forking out a version of `paramiko` and `fabric` for the purposes maintaining these as core features of the whole, but for as long as I can, I will be simply providing a drop in replacement for several objects.
 
+## Notes:
+
+- Requires Python 3.8+; typing has been added pretty aggressively throughout the library, and as a result, you will need to have a slightly newer version of python than is technically required by the base `Fabric` library.
+
 ## Goals
 
 A bunch of clients I target in my own use of `fabric` have a few funky features, including *not* supporting SFTP.
