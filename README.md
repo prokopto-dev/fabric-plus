@@ -1,8 +1,10 @@
-# Fabric-SCP
+# Fabric-Plus
 
-A wrapper for `fabric` and `scp.py` to simplify creating a SCP connection via an existing connection.
+A drop-in expansion of features in the Fabric library.
 
-I may eventually be forking out a version of `paramiko` and `fabric` for the purposes maintaining these as core features.
+See [`fabric`](https://github.com/fabric/fabric) for more details, if interested in the underlying behaviors. Some have been changed: see Important Changes and the documentation for more information.
+
+I may eventually be forking out a version of `paramiko` and `fabric` for the purposes maintaining these as core features of the whole, but for as long as I can, I will be simply providing a drop in replacement for several objects.
 
 ## Goals
 
@@ -18,9 +20,9 @@ What I needed was a way to do the same thing with a connection.
 
 ## Features
 
-- Takes in a fabric `Connection`-type object.
+- Provides a drop-in fabric `Connection` replacement called `ConnectionPlus`; should be imported as `Connection`, if desired to be used as a drop-in.
+- Provides a drop-in replacement fabric `Transfer` replacement called `TransferPlus`; should be imported as `Transfer` if desited to be used as a drop-in.
 - Works with [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) by [@andrewschenck](https://github.com/andrewschenck), allowing for `scp` file transfers via jumphost connections.
-
 
 ## License Addendum
 

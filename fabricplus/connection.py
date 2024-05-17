@@ -1,10 +1,10 @@
 from fabric.connection import Connection
-from fabricscp.transfer import SCPTransfer
+from fabricplus.transfer import TransferPlus
 
-class SCPConnection(Connection):
+class ConnectionPlus(Connection):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.scp: SCPTransfer = SCPTransfer(self)
+        self.scp: TransferPlus = TransferPlus(self)
     
     def put(self, local_path, remote_path='.', preserve_times=True, recursive=False):
         self.scp.put(local_path, remote_path, recursive=recursive, preserve_times=preserve_times)

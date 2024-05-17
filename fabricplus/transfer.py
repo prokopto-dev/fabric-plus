@@ -3,7 +3,7 @@ import scp
 
 from typing import Optional, Any
 
-class SCPTransfer:
+class TransferPlus:
     """
     `.Connection`-wrapping class responsible for managing file upload and download via SCP.
     
