@@ -7,22 +7,21 @@ from scp import SCPClient
 from typing import Optional, Union
 
 class ConnectionPlus(Connection):
-    def __init__(self, *args, jumphost_target: Optional[Union[SSHJumpClient, SSHClient]] = None, **kwargs):
+    def __init__(self, *args, jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None, **kwargs):
         """
         Args:
         
         """
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
-        _client = self.__setup_jumphost(jumphost_target)
-        if _client is not None:
-            _client.set_missing_host_key_policy(WarningPolicy())
-            _client.load_system_host_keys()
-        
+        self.client = self.__setup_jumphost(jumphost_target)
+        self.client.set_missing_host_key_policy(WarningPolicy())
+        self.client.load_system_host_keys()
+
         
     
-    def __setup_jumphost(self, jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]]) -> SSHJumpClient:
-        self.client = jumphost_target
+    # def __setup_client(self, jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None) -> SSHJumpClient:
+        
     
     @opens
     def scp(self):
