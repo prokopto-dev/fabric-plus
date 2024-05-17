@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fabric-scp"
+name = "fabricscp"
 version = "0.1.0"
 description = "A Python 3.8.10+ wrapper to add in SCP functionality for file transfer in Fabric."
 authors = ["Courtney Caldwell <courtneyccaldwell@gmail.com>"]
