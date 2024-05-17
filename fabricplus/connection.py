@@ -8,7 +8,11 @@ from scp import SCPClient
 from typing import Optional, Union, Callable, List, Any
 
 class ConnectionPlus(Connection):
-    def __init__(self, *args, jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None, scp: bool = False, jump_uname: Optional[str] = None, **kwargs):
+    def __init__(self,
+                 *args,
+                 jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
+                 scp: bool = False, jump_uname: Optional[str] = None,
+                 **kwargs):
         """
         Args:
         
