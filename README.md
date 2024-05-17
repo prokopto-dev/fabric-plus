@@ -32,7 +32,10 @@ What I needed was a way to do the same thing with a connection.
 ## TODO
 
 - [ ] Add some unit testing
-- [ ] Add dependency management
+- [ ] Add documentation, docstrings
+- [ ] Add examples in README.md
+- [ ] Add installation instructions to README.md
+- [x] Add dependency management - Done with `poetry`
 - [ ] Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
 - [ ] Make more `Transport`-object-like.
 - [ ] Possibly expand to be drop-in replacement for `Transport`, with added `scp` functionality.
