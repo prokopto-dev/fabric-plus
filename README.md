@@ -18,21 +18,22 @@ What I needed was a way to do the same thing with a connection.
 
 ## Features
 
-Most important to me, it works with the `SSHJumpClient` as defined by [@andrewschenck](https://github.com/andrewschenck) in his [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump).
+- Takes in a fabric `Connection`-type object.
+- Works with [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) by [@andrewschenck](https://github.com/andrewschenck), allowing for `scp` file transfers via jumphost connections.
 
-It should work with any connection via `fabric.connection.Connection`.
 
 ## License Addendum
 
-- []
+- [`scp.py`](https://github.com/jbardin/scp.py) is used by import under the LGPL v2.1 license, and this notice is in accordance with that license.
+- [`fabric`](https://github.com/fabric/fabric) is used, and falls under a BSD-2-Clause license, which doesn't restrict its use as an imported library, but is noted here anyways.
 
 ## TODO
 
-- [ ] Add built-in expansion of `~` and similar behavior
 - [ ] Add some unit testing
 - [ ] Add dependency management
-- [ ] Port over some more functionality from `scp.py`
+- [ ] Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
 - [ ] Make more `Transport`-object-like.
+- [ ] Possibly expand to be drop-in replacement for `Transport`, with added `scp` functionality.
+- [ ] Maybe add a connection object wrapper that does similar things, adding `scp` functionality.
 - [ ] Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
 - [ ] Define version compatibility
-
