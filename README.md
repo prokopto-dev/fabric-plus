@@ -40,5 +40,7 @@ What I needed was a way to do the same thing with a connection.
 - [ ] Make more `Transport`-object-like.
 - [ ] Possibly expand to be drop-in replacement for `Transport`, with added `scp` functionality.
 - [ ] Maybe add a connection object wrapper that does similar things, adding `scp` functionality.
-- [ ] Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
+- [x] Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
 - [ ] Define version compatibility
+- [ ] Add jump-run and `su` commands for connection, including notes about how it works with parallelism
+- [ ] Add notes on how to run things in parallel in docs
