@@ -3,7 +3,24 @@ name = "fabric-scp"
 version = "0.1.0"
 description = "A Python 3.8.10+ wrapper to add in SCP functionality for file transfer in Fabric."
 authors = ["Courtney Caldwell <courtneyccaldwell@gmail.com>"]
-license = "MIT License"
+maintainers = ["Courtney Caldwell <courtneyccaldwell@gmail.com>"]
+repository = "https://github.com/prokopto-dev/fabric-scp"
+keywords = ["fabric", "scp", "file transfer", "python", "wrapper", "paramiko", "connection", "transfer"]
+classifiers = [
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
