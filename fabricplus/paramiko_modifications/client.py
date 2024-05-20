@@ -24,6 +24,7 @@ from typing import (
     Sequence,
     Tuple,
     Union,
+    Any,
 )
 
 from paramiko import AutoAddPolicy, PKey
@@ -46,7 +47,7 @@ class SSHJumpClient(SSHClient):
             *,
             jump_session: Optional[SSHClient] = None,
             auth_handler: Optional[Callable] = None,
-    ):
+    ) -> None:
         """
         :param jump_session:
             If provided, proxy SSH connections through the another
@@ -59,18 +60,18 @@ class SSHJumpClient(SSHClient):
             authentication.
         """
         super().__init__()
-
-        j = self._jump_session = jump_session
+        self._jump_session: Optional[SSHClient] = jump_session
+        j: Optional[SSHClient] = self._jump_session
         if j is not None and not hasattr(j, '_transport'):
             raise TypeError(f'bad jump_session: {j}')
-        self._auth_handler = auth_handler
+        self._auth_handler: Optional[Callable[..., Any]] = auth_handler
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (f'{self.__class__.__name__}('
                 f'jump_session={self._jump_session!r}, '
                 f'auth_handler={self._auth_handler!r})')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__class__.__name__
 
     def _auth(
@@ -109,11 +110,11 @@ class SSHJumpClient(SSHClient):
 
     def connect(
             self,
-            hostname,
-            port=SSH_PORT,
-            username=None,
-            password=None,
-            pkey=None,
+            hostname: str,
+            port: int = SSH_PORT,
+            username: Optional[str] = None,
+            password: Optional[str] = None,
+            pkey: Optional[PKey] = None,
             key_filename=None,
             timeout=None,
             allow_agent=True,
@@ -129,7 +130,7 @@ class SSHJumpClient(SSHClient):
             gss_trust_dns=True,
             passphrase=None,
             disabled_algorithms=None,
-    ):  # pylint: disable=R0913,R0914
+    ) -> None:  # pylint: disable=R0913,R0914
         if self._jump_session is not None:
             if sock is not None:
                 raise ValueError('jump_session= and sock= are mutually '
