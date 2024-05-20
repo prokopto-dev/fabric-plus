@@ -6,10 +6,22 @@ See [`fabric`](https://github.com/fabric/fabric) for more details, if interested
 
 I may eventually be forking out a version of `paramiko` and `fabric` for the purposes maintaining these as core features of the whole, but for as long as I can, I will be simply providing a drop in replacement for several objects.
 
-## Notes:
+## Notes
 
 - Requires Python 3.8+; typing has been added pretty aggressively throughout the library, and as a result, you will need to have a slightly newer version of python than is technically required by the base `Fabric` library.
 - Changed default host key handling to do "Warning" instead of "AutoAdd" (default currently in `Fabric`)
+
+## Installation
+
+While in development, I am using [`poetry`](https://python-poetry.org/). You can install poetry by either `pip3 install poetry` or `brew install poetry`; for more details, please look at the website linked.
+
+To build a version, just run `poetry build` from the cloned repo base.
+
+It should handle all other dependency needs on the backend.
+
+NOTE: I will be adding in `PyPI` and package distributions in a short while. But if you need it as an installed package at `v0.1.0`, please do it as defined above.
+
+Thanks!
 
 ## Goals
 
@@ -64,7 +76,7 @@ What I needed was a way to do the same thing with a connection.
 - [x] Maybe add a connection object wrapper that does similar things, adding `scp` functionality.
 - [x] Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
 - [ ] Define version compatibility
-- [ ] Add jump-run and `su` commands for connection, including notes about how it works with parallelism
+- [x] Add jump-run and `su` commands for connection, including notes about how it works with parallelism
 - [ ] Add notes on how to run things in parallel in docs
 - [x] Finish allowing a jumphost to passed into the ConnectionPlus object so we can go ahead construct those connections; should allow several types of objects to be passed in, including an IP/url, Connection/Plus, or SSH/JumpClient
 - [ ] Add typing to all of the `client.py` file
