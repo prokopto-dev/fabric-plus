@@ -29,6 +29,7 @@ What I needed was a way to do the same thing with a connection.
 - Provides a drop-in replacement fabric `Transfer` replacement called `TransferPlus`; should be imported as `Transfer` if desited to be used as a drop-in.
 - Works with [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) by [@andrewschenck](https://github.com/andrewschenck), allowing for `scp` file transfers via jumphost connections.
 - Added a `su` command to the `ConnectionPlus` object; this runs the command using a specified `su` user.
+- Tries to be fully typed, though `Fabric` isn't consistently this way, so some inherited functions and attributes may remain untyped.
 
 ## License Addendum
 
