@@ -181,6 +181,24 @@ class ConnectionPlus(Connection):
                          interactive_prompt: bool = False,
                          jump_uname: Optional[str] = None,
                          **kwargs) -> SSHClient:
+        """Setup the client object for the ConnectionPlus object.
+        
+        This method can be used to setup the client object for the ConnectionPlus object.
+        But it also can be used to setup the jumphost for the ConnectionPlus object.
+
+        Args:
+            jumphost_target (Optional[Union[SSHJumpClient, SSHClient, str, Connection]], optional): Jumphost to
+                run all actions through for this client. Defaults to None.
+            interactive_prompt (bool, optional): Whether to use an interactive method for the jumphost connectivity.
+                Defaults to False.
+            jump_uname (Optional[str], optional): Username for jumphost if different than connection. Defaults to None.
+
+        Raises:
+            TypeError: If the jumphost_target is not an instance of SSHJumpClient, SSHClient, URL/IP string, or Connection/ConnectionPlus.
+
+        Returns:
+            SSHClient: The SSHClient object for the ConnectionPlus object.
+        """
         _client: Optional[Union[SSHJumpClient, SSHClient]] = None
         _auth_handler: Optional[Callable[..., List[Any]]] = simple_auth_handler if interactive_prompt else None
         if jumphost_target is not None:
@@ -192,7 +210,7 @@ class ConnectionPlus(Connection):
                 _client = SSHJumpClient(auth_handler=_auth_handler)
                 _client.set_missing_host_key_policy(WarningPolicy())
                 _client.load_system_host_keys()
-                self.__client_connect(_client)
+                self.__client_connect(_client, username=jump_uname or self.user)
             elif isinstance(jumphost_target, Connection) or isinstance(jumphost_target, ConnectionPlus):
                 if jumphost_target.client is None:
                     jumphost_target.open()
@@ -203,10 +221,38 @@ class ConnectionPlus(Connection):
     
     @property
     def jump_client(self) -> Optional[SSHJumpClient]:
+        """Get the jump client object for the ConnectionPlus object.
+
+        Returns:
+            Optional[SSHJumpClient]: The jump client object for the ConnectionPlus object.
+        """
         try:
             return self.client._jump_session # type: ignore
         except AttributeError:
             return None
+        
+    def jump_run(self, command: str, timeout: int = 10, **kwargs) -> Optional["Result"]:
+        """Run a command on the jumphost.
+
+        Args:
+            command (str): Command to run on the jumphost.
+            timeout (int, optional): Timeout for the command. Defaults to 10.
+
+        Returns:
+            Optional[Result]: Result object from the command execution.
+        """
+        if self.jump_client is None:
+            raise AttributeError("The ConnectionPlus object does not have a jump client initialized.")
+        try:
+            _timeout: int = kwargs.pop("timeout", timeout)
+            _, _stdout, _stderr = self.jump_client.exec_command(command, timeout=_timeout, **kwargs) or (None, None, None)
+            _stderr_str: str = _stderr.read().decode("utf-8").strip("\n") # type: ignore
+            _stdout_str: str = _stdout.read().decode("utf-8").strip("\n") # type: ignore
+            return Result(stdout=_stdout_str, stderr=_stderr_str, exited=0, encoding="utf-8", command=command)
+        except Exception as e:
+            return Result(stdout="", stderr=str(e), exited=1, encoding="utf-8", command=command)
+        
+        
     
     @opens
     def scp(self):

@@ -28,6 +28,7 @@ What I needed was a way to do the same thing with a connection.
 - Provides a drop-in fabric `Connection` replacement called `ConnectionPlus`; should be imported as `Connection`, if desired to be used as a drop-in.
 - Provides a drop-in replacement fabric `Transfer` replacement called `TransferPlus`; should be imported as `Transfer` if desited to be used as a drop-in.
 - Works with [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) by [@andrewschenck](https://github.com/andrewschenck), allowing for `scp` file transfers via jumphost connections.
+  - Added `jump_run` command to run commands from jumphost itself, if needed.
 - Added a `su` command to the `ConnectionPlus` object; this runs the command using a specified `su` user.
 - Tries to be fully typed, though `Fabric` isn't consistently this way, so some inherited functions and attributes may remain untyped.
 
@@ -65,8 +66,7 @@ What I needed was a way to do the same thing with a connection.
 - [ ] Define version compatibility
 - [ ] Add jump-run and `su` commands for connection, including notes about how it works with parallelism
 - [ ] Add notes on how to run things in parallel in docs
-- [ ] Finish allowing a jumphost to passed into the ConnectionPlus object so we can go ahead construct those connections; should allow several types of objects to be passed in, including an IP/url, Connection/Plus, or SSH/JumpClient
-- [ ] Ensure the `TransferPlus` object is fully inter-compatible with the base object.
+- [x] Finish allowing a jumphost to passed into the ConnectionPlus object so we can go ahead construct those connections; should allow several types of objects to be passed in, including an IP/url, Connection/Plus, or SSH/JumpClient
 - [ ] Add typing to all of the `client.py` file
   - [ ] Add typing to upstream `paramiko-jump` via PR.
 - [ ] Package and deliver via PyPI.
