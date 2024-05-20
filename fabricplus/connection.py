@@ -225,7 +225,20 @@ class ConnectionPlus(Connection):
         return self._scp
 
     def get(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
-        if self.__scp is True:
+        """Get a file from the remote host.
+        
+        Args:
+            remote_path (str): The path to the file on the remote host.
+            local_path (str, optional): The path to save the file locally. Defaults to current working dir.
+            scp (bool, optional): If the transfer should be done via SCP. Defaults to False or the Connection value.
+            recursive (bool, optional): If the transfer should be recursive. Defaults to False.
+            preserve_times (bool, optional): If the file times should be preserved. Defaults to False.
+
+        Returns:
+            Optional[fabric.transfer.Result]: Result object from the transfer.
+        """
+        _scp: bool = kwargs.pop("scp", None) or self.__scp
+        if _scp is True:
             # Ignoring type because apparently it doesn't like Self@ConnectionPlus
             return TransferPlus(self).get(*args, **kwargs) # type: ignore
         else:
@@ -233,7 +246,20 @@ class ConnectionPlus(Connection):
         
         
     def put(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
-        if self.__scp is True:
+        """Get a file from the remote host.
+        
+        Args:
+            local_path (str): The path to the file locally.
+            remote_path (str, optional): The path to save the file on the remote host. Defaults to current working dir.
+            scp (bool, optional): If the transfer should be done via SCP. Defaults to False or the Connection value.
+            recursive (bool, optional): If the transfer should be recursive. Defaults to False.
+            preserve_times (bool, optional): If the file times should be preserved. Defaults to False.
+
+        Returns:
+            Optional[fabric.transfer.Result]: Result object from the transfer.
+        """
+        _scp: bool = kwargs.pop("scp", None) or self.__scp
+        if _scp is True:
             # Ignoring type because apparently it doesn't like Self@ConnectionPlus
             return TransferPlus(self).put(*args, **kwargs) # type: ignore
         else:

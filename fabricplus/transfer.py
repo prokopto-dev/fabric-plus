@@ -30,6 +30,16 @@ class TransferPlus(Transfer):
                                  ", use ConnectionPlus instead.")
     
     def get(self, *args, **kwargs) -> None:
+        """Get a file from the remote host.
+        Args:
+            remote_path (str): The path to the file on the remote host.
+            local_path (str, optional): The path to save the file locally. Defaults to current working dir.
+            recursive (bool, optional): If the transfer should be recursive. Defaults to False.
+            preserve_times (bool, optional): If the file times should be preserved. Defaults to False.
+
+        Returns:
+            Optional[fabric.transfer.Result]: Result object from the transfer.
+        """
         return self.scp.get(*args, **kwargs)
     
     def put(self, *args, **kwargs) -> None:
