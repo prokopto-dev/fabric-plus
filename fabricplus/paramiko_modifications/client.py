@@ -56,9 +56,16 @@ class SSHJumpClient(SSHClient):
         SSHJumpClient constructor, which is a subclass of
         paramiko.client.SSHClient.
         
-        :param jump_session: If provided, proxy SSH connections through the another instance of SSHClient.
+        :param jump_session:
+            If provided, proxy SSH connections through the another
+            instance of SSHClient.
         :type jump_session: Optional[SSHClient], optional
-        :param auth_handler: If provided, keyboard-interactive authentication will be implemented, using this handler as the callback. If this is set to None, use Paramiko's default authentication algorithm instead of forcing keyboard-interactive authentication.
+        :param auth_handler:
+            If provided, keyboard-interactive authentication will be
+            implemented, using this handler as the callback. If this
+            is set to None, use Paramiko's default authentication
+            algorithm instead of forcing keyboard-interactive
+            authentication.
         :type auth_handler: Optional[Callable], optional
         """
         super().__init__()
@@ -103,27 +110,38 @@ class SSHJumpClient(SSHClient):
         """
         Authenticate to the server.
         
-        :param username: Username to authenticate with.
+        :param username: 
+            Username to authenticate with.
         :type username: AnyStr
-        :param password: Password to authenticate with, defaults to None
+        :param password: 
+            Password to authenticate with, defaults to None
         :type password: Optional[AnyStr], optional
-        :param pkey: Private key file to use for authentication, defaults to None
+        :param pkey:
+            Private key file to use for authentication, defaults to None
         :type pkey: Optional[PKey], optional
-        :param key_filenames: Private key filenames to use for authentication, defaults to None
+        :param key_filenames:
+            Private key filenames to use for authentication, defaults to None
         :type key_filenames: Optional[AnyStr], optional
-        :param allow_agent: Allow local SSH Agent to provide private key files, defaults to True
+        :param allow_agent:
+            Allow local SSH Agent to provide private key files, defaults to True
         :type allow_agent: bool, optional
-        :param look_for_keys: Look for keys in default locations, defaults to True
+        :param look_for_keys:
+            Look for keys in default locations, defaults to True
         :type look_for_keys: bool, optional
-        :param gss_auth: Allow GSS-API authentication, defaults to False
+        :param gss_auth:
+            Allow GSS-API authentication, defaults to False
         :type gss_auth: bool, optional
-        :param gss_kex: Allow GSS-API key exchange, defaults to False
+        :param gss_kex:
+            Allow GSS-API key exchange, defaults to False
         :type gss_kex: bool, optional
-        :param gss_deleg_creds: Delegate GSS-API credentials from client to server, defaults to True
+        :param gss_deleg_creds:
+            Delegate GSS-API credentials from client to server, defaults to True
         :type gss_deleg_creds: bool, optional
-        :param gss_host: Hostname to use in GSS-API authentication, defaults to None
+        :param gss_host:
+            Hostname to use in GSS-API authentication, defaults to None
         :type gss_host: Optional[AnyStr], optional
-        :param passphrase: Passphrase to use for private key, defaults to None
+        :param passphrase:
+            Passphrase to use for private key, defaults to None
         :type passphrase: Optional[AnyStr], optional
         :return: None
         :rtype: None
@@ -176,47 +194,69 @@ class SSHJumpClient(SSHClient):
         """
         Connect to an SSH server and authenticate to it.
 
-        :param hostname: Hostname or IP address of the remote host.
+        :param hostname: 
+            Hostname or IP address of the remote host.
         :type hostname: str
-        :param port: Port number of the remote host, defaults to SSH_PORT (22)
+        :param port:
+            Port number of the remote host, defaults to SSH_PORT (22)
         :type port: int, optional
-        :param username: Username to authenticate as, defaults to None
+        :param username:
+            Username to authenticate as, defaults to None
         :type username: Optional[str], optional
-        :param password: Password to authenticate with, defaults to None
+        :param password:
+            Password to authenticate with, defaults to None
         :type password: Optional[str], optional
-        :param pkey: PKey object for private key, defaults to None
+        :param pkey:
+            PKey object for private key, defaults to None
         :type pkey: Optional[PKey], optional
-        :param key_filename: Filename of the private key file, defaults to None
+        :param key_filename:
+            Filename of the private key file, defaults to None
         :type key_filename: Optional[str], optional
-        :param timeout: Timeout for the TCP connect, defaults to None
+        :param timeout:
+            Timeout for the TCP connect, defaults to None
         :type timeout: Optional[int], optional
-        :param allow_agent: Set to False to disable connecting to the SSH agent, defaults to True
+        :param allow_agent:
+            Set to False to disable connecting to the SSH agent, defaults to True
         :type allow_agent: bool, optional
-        :param look_for_keys: Set to False to disable searching for discoverable private key files, defaults to True
+        :param look_for_keys:
+            Set to False to disable searching for discoverable private key files, defaults to True
         :type look_for_keys: bool, optional
-        :param compress: Set to True to turn on compression, defaults to False
+        :param compress:
+            Set to True to turn on compression, defaults to False
         :type compress: bool, optional
-        :param sock: Existing socket to use for connection, defaults to None
+        :param sock:
+            Existing socket to use for connection, defaults to None
         :type sock: Optional[socket], optional
-        :param gss_auth: Set to True to allow GSS-API authentication, defaults to False
+        :param gss_auth:
+            Set to True to allow GSS-API authentication, defaults to False
         :type gss_auth: bool, optional
-        :param gss_kex: Set to True to allow GSS-API key exchange, defaults to False
+        :param gss_kex:
+            Set to True to allow GSS-API key exchange, defaults to False
         :type gss_kex: bool, optional
-        :param gss_deleg_creds: Set to True to delegate GSS-API credentials from client to server, defaults to True
+        :param gss_deleg_creds:
+            Set to True to delegate GSS-API credentials from client to server, defaults to True
         :type gss_deleg_creds: bool, optional
-        :param gss_host: Hostname to use in GSS-API authentication, defaults to None
+        :param gss_host:
+            Hostname to use in GSS-API authentication, defaults to None
         :type gss_host: Optional[str], optional
-        :param banner_timeout: Timeout for the banner message, defaults to None
+        :param banner_timeout:
+            Timeout for the banner message, defaults to None
         :type banner_timeout: Optional[int], optional
-        :param auth_timeout: Timeout for authentication, defaults to None
+        :param auth_timeout:
+            Timeout for authentication, defaults to None
         :type auth_timeout: Optional[int], optional
-        :param gss_trust_dns: Set to False to disable DNS lookups for GSS-API, defaults to True
+        :param gss_trust_dns:
+            Set to False to disable DNS lookups for GSS-API, defaults to True
         :type gss_trust_dns: bool, optional
-        :param passphrase: Passphrase to use for private key, defaults to None
+        :param passphrase:
+            Passphrase to use for private key, defaults to None
         :type passphrase: Optional[str], optional
-        :param disabled_algorithms: A dictionary of disabled algorithms, defaults to None
+        :param disabled_algorithms:
+            A dictionary of disabled algorithms, defaults to None
         :type disabled_algorithms: Optional[Dict[str, List[str]]], optional
-        :raises ValueError: If jump_session and sock are both provided as arguments; they are mutually exclusive
+        :raises ValueError:
+            If jump_session and sock are both provided as arguments; 
+            they are mutually exclusive
         :return: None
         :rtype: None
         """
@@ -393,6 +433,7 @@ def simple_auth_handler(
         input_ = input if show_input else getpass
         answers.append(input_(prompt)) # type: ignore
     return answers
+
 
 # LICENSE INFORMATION
 # -------------------
