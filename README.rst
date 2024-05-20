@@ -1,4 +1,5 @@
-# Fabric-Plus
+Fabric-Plus
+===========
 
 A drop-in expansion of features in the Fabric library.
 
@@ -6,12 +7,14 @@ See [`fabric`](https://github.com/fabric/fabric) for more details, if interested
 
 I may eventually be forking out a version of `paramiko` and `fabric` for the purposes maintaining these as core features of the whole, but for as long as I can, I will be simply providing a drop in replacement for several objects.
 
-## Notes
+Notes
+-----
 
 - Requires Python 3.8+; typing has been added pretty aggressively throughout the library, and as a result, you will need to have a slightly newer version of python than is technically required by the base `Fabric` library.
 - Changed default host key handling to do "Warning" instead of "AutoAdd" (default currently in `Fabric`)
 
-## Installation
+Installation
+------------
 
 While in development, I am using [`poetry`](https://python-poetry.org/). You can install poetry by either `pip3 install poetry` or `brew install poetry`; for more details, please look at the website linked.
 
@@ -23,7 +26,8 @@ NOTE: I will be adding in `PyPI` and package distributions in a short while. But
 
 Thanks!
 
-## Goals
+Goals
+-----
 
 A bunch of clients I target in my own use of `fabric` have a few funky features, including *not* supporting SFTP.
 
@@ -35,7 +39,8 @@ This is also true for `paramiko`.
 
 What I needed was a way to do the same thing with a connection.
 
-## Features
+Features
+--------
 
 - Provides a drop-in fabric `Connection` replacement called `ConnectionPlus`; should be imported as `Connection`, if desired to be used as a drop-in.
 - Provides a drop-in replacement fabric `Transfer` replacement called `TransferPlus`; should be imported as `Transfer` if desited to be used as a drop-in.
@@ -44,7 +49,8 @@ What I needed was a way to do the same thing with a connection.
 - Added a `su` command to the `ConnectionPlus` object; this runs the command using a specified `su` user.
 - Tries to be fully typed, though `Fabric` isn't consistently this way, so some inherited functions and attributes may remain untyped.
 
-## Timeline
+Timeline
+--------
 
 - [x] Finish initial feature builds with
   - Interopability with base `Connection`
@@ -57,13 +63,14 @@ What I needed was a way to do the same thing with a connection.
 - [ ] Set up automated building
 - [ ] Publish 1.0 to PyPI
 
-## License Addendum
-
+License Addendum
+----------------
 - [`scp.py`](https://github.com/jbardin/scp.py) is used by import under the LGPL v2.1 license, and this notice is in accordance with that license.
 - [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) used under Apache License 2.0, see `fabricplus/paramiko_modifications/client.py` for license details.
 - [`fabric`](https://github.com/fabric/fabric) is used, and falls under a BSD-2-Clause license, which doesn't restrict its use as an imported library, but is noted here anyways.
 
-## TODO
+TODO
+----
 
 - [ ] Add some unit testing
 - [ ] Add documentation, docstrings
