@@ -11,6 +11,7 @@ copyright = '2024, Courtney Caldwell'
 author = 'Courtney Caldwell'
 release = '0.1'
 html_logo = '_static/logo.png'
+html_baseurl = 'https://fabricplus.prokopto.dev/'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
