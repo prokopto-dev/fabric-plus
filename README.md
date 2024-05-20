@@ -31,6 +31,19 @@ What I needed was a way to do the same thing with a connection.
 - Added a `su` command to the `ConnectionPlus` object; this runs the command using a specified `su` user.
 - Tries to be fully typed, though `Fabric` isn't consistently this way, so some inherited functions and attributes may remain untyped.
 
+## Timeline
+
+- [x] Finish initial feature builds with
+  - Interopability with base `Connection`
+  - Added `paramiko-jump` compatibility
+  - Added `scp` compatibility
+  - Added `su` compatibility
+- [ ] Finish typing, docstrings, and consistency checks
+- [ ] Set up auto-generating documentation
+- [ ] Set up automated unit testing
+- [ ] Set up automated building
+- [ ] Publish 1.0 to PyPI
+
 ## License Addendum
 
 - [`scp.py`](https://github.com/jbardin/scp.py) is used by import under the LGPL v2.1 license, and this notice is in accordance with that license.
@@ -54,3 +67,6 @@ What I needed was a way to do the same thing with a connection.
 - [ ] Add notes on how to run things in parallel in docs
 - [ ] Finish allowing a jumphost to passed into the ConnectionPlus object so we can go ahead construct those connections; should allow several types of objects to be passed in, including an IP/url, Connection/Plus, or SSH/JumpClient
 - [ ] Ensure the `TransferPlus` object is fully inter-compatible with the base object.
+- [ ] Add typing to all of the `client.py` file
+  - [ ] Add typing to upstream `paramiko-jump` via PR.
+- [ ] Package and deliver via PyPI.

@@ -26,7 +26,7 @@ from typing import (
     Union,
 )
 
-from paramiko import AutoAddPolicy
+from paramiko import AutoAddPolicy, PKey
 from paramiko.client import SSHClient
 from paramiko.config import SSH_PORT
 
@@ -75,9 +75,9 @@ class SSHJumpClient(SSHClient):
 
     def _auth(
             self,
-            username,
-            password,
-            pkey,
+            username: str,
+            password: str,
+            pkey: PKey,
             key_filenames,
             allow_agent,
             look_for_keys,
