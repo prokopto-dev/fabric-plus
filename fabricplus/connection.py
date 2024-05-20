@@ -1,11 +1,20 @@
+# External Imports
 from fabric.connection import Connection, opens
 import fabric.transfer
-from fabricplus.transfer import TransferPlus
+import re
+from invoke.watchers import FailingResponder, Responder
 from paramiko import WarningPolicy, SSHClient, Transport
-from fabricplus.paramiko_modifications.client import SSHJumpClient, simple_auth_handler
 from scp import SCPClient
+from invoke.exceptions import Failure, ResponseNotAccepted, AuthFailure
 
-from typing import Optional, Union, Callable, List, Any
+# Internal Imports
+from fabricplus.transfer import TransferPlus
+from fabricplus.paramiko_modifications.client import SSHJumpClient, simple_auth_handler
+
+# Typing Imports
+from typing import Optional, Union, Callable, List, Any, TYPE_CHECKING
+if TYPE_CHECKING:
+    from invoke.runners import Runner, Result
 
 class ConnectionPlus(Connection):
     def __init__(self,
@@ -20,11 +29,80 @@ class ConnectionPlus(Connection):
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
         self.__scp: bool = scp
-        self.client = self.__setup_jumphost(jumphost_target=jumphost_target, jump_uname=jump_uname)
+        self.client = self.__client_setup(jumphost_target=jumphost_target, jump_uname=jump_uname)
         self.client.set_missing_host_key_policy(WarningPolicy())
         self.client.load_system_host_keys()
+    
+    def su(self, command: str, user: str, password:Optional[str] = None, timeout: int = 10, **kwargs: Any) -> Optional["Result"]:
+        """Run a command as another user, via su.
         
-    def __connect_client(self,
+        Requires the target user's password be given, either directly, or via the ConnectionPlus object.
+        
+        Note: This method doesn't work on Windows, as Windows doesn't have su, nor does it work in parallel on
+        some systems due to the way su is implemented (e.g. it may require a tty).
+
+        Args:
+            command (str): Command to run as another user.
+            user (str): User to run the command as.
+            password (Optional[str]): Password for the target users. Defaults to None.
+            timeout (int, optional): Timeout on the command running. Defaults to 10.
+
+        Returns:
+            Optional[Result]: Result object from the command execution.
+            
+        Raises:
+            ValueError: If the password is not given.
+        """
+        _password: str = password or self.connect_kwargs.get("password", None) # type: ignore
+        if _password is None:
+            raise ValueError("The password must be given to run a command as another user.")
+        return self._su(runner=self._remote_runner(), command=command, password=_password, timeout=timeout, pty=True, **kwargs)
+    
+    def _su(self, runner: "Runner", command: str, user: str, password: Optional[str] = None, timeout: int = 10, **kwargs: Any) -> Optional["Result"]:
+        """Run a command as another user, via su.
+        
+        Requires the target user's password be given, either directly, or via the ConnectionPlus object.
+        
+        Note: This method doesn't work on Windows, as Windows doesn't have su, nor does it work in parallel on
+        some systems due to the way su is implemented (e.g. it may require a tty).
+
+        Args:
+            runner (Runner): Invoke-based remote runner for remote execution environment.
+            command (str): Command to run in su.
+            user (str): User to run the command as.
+            password (Optional[str]): Password for the target user. Needed, but defaults to None.
+            timeout (int, optional): Timeout for the command. Defaults to 10.
+
+        Returns:
+            Optional[Result]: Result object from the command execution.
+            
+        Raises:
+            AuthFailure: If the password is not accepted.
+            Failure: If the command fails for any other reason.
+        """
+        _prompt: str = "Password: "
+        _command: str = self._prefix_commands(command)
+        # Escape all double quotes in the command.
+        _cmd_str: str  = f'su - {user} -c "{command}"'.format(user=user, command=_command.replace('"', '\\"'))
+        _watcher: FailingResponder = FailingResponder(
+            pattern=re.escape(_prompt),
+            response="{password}\n".format(password=password),
+            sentinel="Sorry, try again.\n",
+        )
+        watchers: List[Union[FailingResponder, Responder]] = kwargs.pop("watchers", [])
+        watchers.append(_watcher)
+        try:
+            return runner.run(_cmd_str, timeout=timeout, watchers=watchers, **kwargs)
+        except Failure as failure:
+            if isinstance(failure.reason, ResponseNotAccepted):
+                raise AuthFailure(result=failure.result, prompt=_prompt)
+            else:
+                raise failure
+        
+            
+
+        
+    def __client_connect(self,
                          client: Union[SSHJumpClient, SSHClient],
                          username: Optional[str] = None) -> None:
         """
@@ -62,7 +140,7 @@ class ConnectionPlus(Connection):
         # No conflicts -> merge 'em together
         kwargs = dict(
             self.connect_kwargs,
-            username=self.user,
+            username=username or self.user,
             hostname=self.host,
             port=self.port,
         )
@@ -93,13 +171,13 @@ class ConnectionPlus(Connection):
                 fabric_config=self.config,
                 username=username or self.user,
             )
-        client.connect(**kwargs)
+        client.connect(**kwargs) # type: ignore
         return None
         
     
-    def __setup_jumphost(self,
+    def __client_setup(self,
                          *args,
-                         jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]],
+                         jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
                          interactive_prompt: bool = False,
                          jump_uname: Optional[str] = None,
                          **kwargs) -> SSHClient:
@@ -114,13 +192,13 @@ class ConnectionPlus(Connection):
                 _client = SSHJumpClient(auth_handler=_auth_handler)
                 _client.set_missing_host_key_policy(WarningPolicy())
                 _client.load_system_host_keys()
-                self.__connect_client(_client)
-            elif isinstance(jumphost_target, Connection):
+                self.__client_connect(_client)
+            elif isinstance(jumphost_target, Connection) or isinstance(jumphost_target, ConnectionPlus):
                 if jumphost_target.client is None:
                     jumphost_target.open()
                 _client = jumphost_target.client
             else:
-                raise TypeError("The jumphost_target must be an instance of SSHJumpClient, SSHClient, str, or Connection.")
+                raise TypeError("The jumphost_target must be an instance of SSHJumpClient, SSHClient, URL/IP string, or Connection/ConnectionPlus.")
         return SSHJumpClient(*args, jump_session=_client, auth_handler=_auth_handler, **kwargs)
     
     @property

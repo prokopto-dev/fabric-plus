@@ -7,14 +7,18 @@ from typing import Type
     
 
 class TransferPlus(Transfer):
-    """
-    `.Connection`-wrapping and `.ConnectionPlus`-wrapping class responsible for managing file upload/download.
-
-    .. versionadded:: 1.0
+    """TransferPlus is a subclass of the base fabric Transfer object, overloading
+    the parent object to provide additional functionality for SCP transfers.
     """
 
     def __init__(self,
                  connection: Type[fabric.Connection]) -> None:
+        """Initializes the TransferPlus object.
+        
+
+        Args:
+            connection (Type[fabric.Connection]): The fabric Connection object to use for the transfer.
+        """
         self.connection: Type[fabric.Connection] = connection
 
     @property
