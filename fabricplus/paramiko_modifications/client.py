@@ -76,25 +76,49 @@ class SSHJumpClient(SSHClient):
 
     def _auth(
             self,
-            username: str,
-            password: str,
-            pkey: PKey,
-            key_filenames,
-            allow_agent,
-            look_for_keys,
-            gss_auth,
-            gss_kex,
-            gss_deleg_creds,
-            gss_host,
-            passphrase,
-    ):  # pylint: disable=R0913
+            username: AnyStr,
+            password: Optional[AnyStr] = None,
+            pkey: Optional[PKey] = None,
+            key_filenames: Optional[AnyStr] = None,
+            allow_agent: bool = True,
+            look_for_keys: bool = True,
+            gss_auth: bool = False,
+            gss_kex: bool = False,
+            gss_deleg_creds: bool = False,
+            gss_host: Optional[AnyStr] = None,
+            passphrase: Optional[AnyStr] = None,
+    ) -> None:  # pylint: disable=R0913
+        """Try, in order:
+            - The key(s) passed in, if any.
+            - Any key found through SSH agent (if allowed).
+            - Any "id_rsa" or "id_dsa" key discoverable in ~/.ssh/ (if allowed).
+            - Password auth, if a password was given.
+            
+        A pkey that is encrypted and requires a passphrase will be decrypted
+        using the passphrase provided, or password if passphrase is None.
+
+        Args:
+            username (AnyStr): Username for authentication.
+            password (AnyStr): Password for authentication.
+            pkey (PKey): Private key for authentication.
+            key_filenames (str): Additional key filenames to try.
+            allow_agent (bool): Allow SSH Agent gathering of keys.
+            look_for_keys (bool): Look for keys in ~/.ssh/.
+            gss_auth (bool): Allow GSS-API authentication.
+            gss_kex (bool): Allow GSS-API key exchange.
+            gss_deleg_creds (bool): Delegate GSS-API credentials.
+            gss_host (str): Hostname for GSS-API authentication.
+            passphrase (str): Passphrase for decrypting private key.
+        """
         if callable(self._auth_handler):
-            return self._transport.auth_interactive(
+            # Ignore type issues here, as the super class does
+            # not share _transport information (which is private)
+            return self._transport.auth_interactive( # type: ignore
                 username=username,
                 handler=self._auth_handler,
             )
 
-        return super()._auth(
+        return super()._auth( # type: ignore
             username=username,
             password=password,
             pkey=pkey,
@@ -116,7 +140,7 @@ class SSHJumpClient(SSHClient):
             password: Optional[str] = None,
             pkey: Optional[PKey] = None,
             key_filename=None,
-            timeout=None,
+            timeout: Optional[int] = None,
             allow_agent=True,
             look_for_keys=True,
             compress=False,
@@ -129,7 +153,7 @@ class SSHJumpClient(SSHClient):
             auth_timeout=None,
             gss_trust_dns=True,
             passphrase=None,
-            disabled_algorithms=None,
+            disabled_algorithms: Optional[List[str]] = None,
     ) -> None:  # pylint: disable=R0913,R0914
         if self._jump_session is not None:
             if sock is not None:
