@@ -1,6 +1,10 @@
 Fabric-Plus
 ===========
 
+.. image:: docs_source/source/_static/logo.png
+  :width: 100
+  :alt: Fabric-Plus Logo
+
 A drop-in expansion of features in the Fabric library.
 
 See [`fabric`](https://github.com/fabric/fabric) for more details, if interested in the underlying behaviors. Some have been changed: see Important Changes and the documentation for more information.
