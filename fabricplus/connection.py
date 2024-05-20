@@ -17,14 +17,37 @@ if TYPE_CHECKING:
     from invoke.runners import Runner, Result
 
 class ConnectionPlus(Connection):
+    """ConnectionPlus is a subclass of the Connection object from the Fabric library.
+    
+    This subclass provides additional functionality to the Connection object, such as SCP transfers,
+    running commands as another user, and running commands on a jumphost, as well as connecting to 
+    a host through a jumphost.
+    """
     def __init__(self,
                  *args,
                  jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
                  scp: bool = False, jump_uname: Optional[str] = None,
                  **kwargs):
-        """
-        Args:
+        """Initialize the ConnectionPlus object.
         
+        Initializes using the Connection initialization, but also sets up the client object
+        for the ConnectionPlus object via a jumphost target.
+
+        :param jumphost_target: 
+            Jumphost to connect to the host through.
+            Can be an instance of SSHJumpClient, SSHClient, URL/IP string,
+            or Connection/ConnectionPlus.
+            Defaults to None.
+        :type jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]], optional
+        :param scp:
+            Boolean value to define if the ConnectionPlus object should
+            use SCP for file transfers.
+            Defaults to False.
+        :type scp: bool, optional
+        :param jump_uname:
+            Username for the jumphost if different than the connection.
+            Defaults to None.
+        :type jump_uname: Optional[str], optional
         """
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
@@ -33,7 +56,12 @@ class ConnectionPlus(Connection):
         self.client.set_missing_host_key_policy(WarningPolicy())
         self.client.load_system_host_keys()
     
-    def su(self, command: str, user: str, password:Optional[str] = None, timeout: int = 10, **kwargs: Any) -> Optional["Result"]:
+    def su(self,
+           command: str,
+           user: str,
+           password:Optional[str] = None,
+           timeout: int = 10,
+           **kwargs: Any) -> Optional["Result"]:
         """Run a command as another user, via su.
         
         Requires the target user's password be given, either directly, or via the ConnectionPlus object.
@@ -41,44 +69,50 @@ class ConnectionPlus(Connection):
         Note: This method doesn't work on Windows, as Windows doesn't have su, nor does it work in parallel on
         some systems due to the way su is implemented (e.g. it may require a tty).
 
-        Args:
-            command (str): Command to run as another user.
-            user (str): User to run the command as.
-            password (Optional[str]): Password for the target users. Defaults to None.
-            timeout (int, optional): Timeout on the command running. Defaults to 10.
-
-        Returns:
-            Optional[Result]: Result object from the command execution.
-            
-        Raises:
-            ValueError: If the password is not given.
+        :param command: Command to run in su.
+        :type command: str
+        :param user: User to run the command as.
+        :type user: str
+        :param password: Password for the target user. Needed, but defaults to None.
+        :type password: Optional[str]
+        :param timeout: Timeout for the command. Defaults to 10.
+        :type timeout: int, optional
+        :param kwargs: Additional keyword arguments to pass to the command execution.
+        :type kwargs: Any
+        :raises ValueError: If the password is not given.
+        :return: Result object from the command execution.
+        :rtype: Optional[Result]
         """
         _password: str = password or self.connect_kwargs.get("password", None) # type: ignore
         if _password is None:
             raise ValueError("The password must be given to run a command as another user.")
         return self._su(runner=self._remote_runner(), command=command, password=_password, timeout=timeout, pty=True, **kwargs)
     
-    def _su(self, runner: "Runner", command: str, user: str, password: Optional[str] = None, timeout: int = 10, **kwargs: Any) -> Optional["Result"]:
-        """Run a command as another user, via su.
+    def _su(self,
+            runner: "Runner",
+            command: str,
+            user: str,
+            password: Optional[str] = None,
+            timeout: int = 10,
+            **kwargs: Any) -> Optional["Result"]:
+        """Internal representation to run a command as another user, via su.
         
-        Requires the target user's password be given, either directly, or via the ConnectionPlus object.
-        
-        Note: This method doesn't work on Windows, as Windows doesn't have su, nor does it work in parallel on
-        some systems due to the way su is implemented (e.g. it may require a tty).
-
-        Args:
-            runner (Runner): Invoke-based remote runner for remote execution environment.
-            command (str): Command to run in su.
-            user (str): User to run the command as.
-            password (Optional[str]): Password for the target user. Needed, but defaults to None.
-            timeout (int, optional): Timeout for the command. Defaults to 10.
-
-        Returns:
-            Optional[Result]: Result object from the command execution.
-            
-        Raises:
-            AuthFailure: If the password is not accepted.
-            Failure: If the command fails for any other reason.
+        :param runner: The runner object to run the command.
+        :type runner: Runner
+        :param command: Command to run in su.
+        :type command: str
+        :param user: User to run the command as.
+        :type user: str
+        :param password: Password for the target user. Needed, but defaults to None.
+        :type password: Optional[str]
+        :param timeout: Timeout for the command. Defaults to 10.
+        :type timeout: int, optional
+        :param kwargs: Additional keyword arguments to pass to the command execution.
+        :type kwargs: Any
+        :raises AuthFailure: If the authentication fails.
+        :raises failure: If the command execution fails.
+        :return: Result object from the command execution.
+        :rtype: Optional[Result]
         """
         _prompt: str = "Password: "
         _command: str = self._prefix_commands(command)
@@ -98,27 +132,21 @@ class ConnectionPlus(Connection):
                 raise AuthFailure(result=failure.result, prompt=_prompt)
             else:
                 raise failure
-        
-            
 
-        
     def __client_connect(self,
                          client: Union[SSHJumpClient, SSHClient],
                          username: Optional[str] = None) -> None:
-        """
-        Connect a client object (SSHJumpClient or SSHClient) to
-        the target host.
+        """Connect the client object for the ConnectionPlus object.
         
-        This is mostly used to provide some ability to pass in
-        kwargs.
+        Helps pass in the connect arguments from the Connection object.
         
-        Args:
-            client (Union[SSHJumpClient, SSHClient]): The client object to connect.
-            username (Optional[str], optional): The username to use for the connection. Defaults to None.
-
-        Raises:
-            ValueError: If the connect() method is given conflicting arguments.
-        """
+        These include some loaded from SSH Config.
+        
+        :param client: The client object to connect.
+        :type client: Union[SSHJumpClient, SSHClient]
+        :param username: Username to connect with. Defaults to None.
+        :type username: Optional[str], optional
+        """        
         # Short-circuit
         if self.is_connected:
             return
@@ -180,24 +208,21 @@ class ConnectionPlus(Connection):
                          jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
                          interactive_prompt: bool = False,
                          jump_uname: Optional[str] = None,
-                         **kwargs) -> SSHClient:
+                         **kwargs) -> Union[SSHClient, "SSHJumpClient"]:
         """Setup the client object for the ConnectionPlus object.
         
         This method can be used to setup the client object for the ConnectionPlus object.
         But it also can be used to setup the jumphost for the ConnectionPlus object.
-
-        Args:
-            jumphost_target (Optional[Union[SSHJumpClient, SSHClient, str, Connection]], optional): Jumphost to
-                run all actions through for this client. Defaults to None.
-            interactive_prompt (bool, optional): Whether to use an interactive method for the jumphost connectivity.
-                Defaults to False.
-            jump_uname (Optional[str], optional): Username for jumphost if different than connection. Defaults to None.
-
-        Raises:
-            TypeError: If the jumphost_target is not an instance of SSHJumpClient, SSHClient, URL/IP string, or Connection/ConnectionPlus.
-
-        Returns:
-            SSHClient: The SSHClient object for the ConnectionPlus object.
+        
+        :param jumphost_target: Jumphost to run all actions through for this client. Defaults to None.
+        :type jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]], optional
+        :param interactive_prompt: Whether to use an interactive method for the jumphost connectivity. Defaults to False.
+        :type interactive_prompt: bool, optional
+        :param jump_uname: Username for jumphost if different than connection. Defaults to None.
+        :type jump_uname: Optional[str], optional
+        :raises TypeError: If the jumphost_target is not an instance of SSHJumpClient, SSHClient, URL/IP string, or Connection/ConnectionPlus.
+        :return: The SSHClient object for the ConnectionPlus object.
+        :rtype: Union[SSHClient/SSHJumpClient]
         """
         _client: Optional[Union[SSHJumpClient, SSHClient]] = None
         _auth_handler: Optional[Callable[..., List[Any]]] = simple_auth_handler if interactive_prompt else None
