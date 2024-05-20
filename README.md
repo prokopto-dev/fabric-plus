@@ -82,3 +82,4 @@ What I needed was a way to do the same thing with a connection.
 - [ ] Add typing to all of the `client.py` file
   - [ ] Add typing to upstream `paramiko-jump` via PR.
 - [ ] Package and deliver via PyPI.
+- [ ] Convert all docstrings to `sphinx` / `rst` style for doc generation
