@@ -1,26 +1,5 @@
-.. |check| raw:: html
-
-    <input checked=""  type="checkbox">
-
-.. |check_| raw:: html
-
-    <input checked=""  disabled="" type="checkbox">
-
-.. |uncheck| raw:: html
-
-    <input type="checkbox">
-
-.. |uncheck_| raw:: html
-
-    <input disabled="" type="checkbox">
-
-
 Fabric-Plus
 ===========
-
-.. image:: docs_source/source/_static/logo.png
-  :width: 100
-  :alt: Fabric-Plus Logo
 
 A drop-in expansion of features in the Fabric library.
 
@@ -73,16 +52,16 @@ Features
 Timeline
 --------
 
-|check_| Finish initial feature builds with
+- [x] Finish initial feature builds with
   - Interopability with base `Connection`
   - Added `paramiko-jump` compatibility
   - Added `scp` compatibility
   - Added `su` compatibility
-|uncheck_| Finish typing, docstrings, and consistency checks
-|uncheck_| Set up auto-generating documentation
-|uncheck_| Set up automated unit testing
-|uncheck_| Set up automated building
-|uncheck_| Publish 1.0 to PyPI
+- [ ] Finish typing, docstrings, and consistency checks
+- [ ] Set up auto-generating documentation
+- [ ] Set up automated unit testing
+- [ ] Set up automated building
+- [ ] Publish 1.0 to PyPI
 
 License Addendum
 ----------------
@@ -93,21 +72,22 @@ License Addendum
 TODO
 ----
 
-|uncheck_| Add some unit testing
-|uncheck_| Add documentation, docstrings
-|uncheck_| Add examples in README.md
-|uncheck_| Add installation instructions to README.md
-|check_| Add dependency management - Done with `poetry`
-|uncheck_| Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
-|check_| Make more `Transfer`-object-like.
-|check_| Possibly expand to be drop-in replacement for `Transfer`, with added `scp` functionality.
-|check_| Maybe add a connection object wrapper that does similar things, adding `scp` functionality.
-|check_| Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
-|uncheck_| Define version compatibility
-|check_| Add jump-run and `su` commands for connection, including notes about how it works with parallelism
-|uncheck_| Add notes on how to run things in parallel in docs
-|check_| Finish allowing a jumphost to passed into the ConnectionPlus object so we can go ahead construct those connections; should allow several types of objects to be passed in, including an IP/url, Connection/Plus, or SSH/JumpClient
-|uncheck_| Add typing to all of the `client.py` file
-|uncheck_| Add typing to upstream `paramiko-jump` via PR.
-|uncheck_| Package and deliver via PyPI.
-|uncheck_| Convert all docstrings to `sphinx` / `rst` style for doc generation
+- [ ] Add some unit testing
+- [ ] Add documentation, docstrings
+- [ ] Add examples in README.md
+- [ ] Add installation instructions to README.md
+- [x] Add dependency management - Done with `poetry`
+- [ ] Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
+- [x] Make more `Transfer`-object-like.
+- [x] Possibly expand to be drop-in replacement for `Transfer`, with added `scp` functionality.
+- [x] Maybe add a connection object wrapper that does similar things, adding `scp` functionality.
+- [x] Add inspiration/references to other projects like paramiko-jump and paramiko-scp (scp.py)
+- [ ] Define version compatibility
+- [x] Add jump-run and `su` commands for connection,
+- [ ] including notes about how it works with parallelism for `su` vs `sudo` as a user
+- [ ] Add notes on how to run things in parallel in docs
+- [x] Finish allowing a jumphost to passed into the ConnectionPlus object so we can go ahead construct those connections; should allow several types of objects to be passed in, including an IP/url, Connection/Plus, or SSH/JumpClient
+- [ ] Add typing to all of the `client.py` file
+- [ ] Add typing to upstream `paramiko-jump` via PR.
+- [ ] Package and deliver via PyPI.
+- [ ] Convert all docstrings to `sphinx` / `rst` style for doc generation
