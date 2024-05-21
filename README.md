@@ -97,6 +97,17 @@ conn_b: ConnectionPlus = ConnectionPlus("some_host")
 # we run this with an scp=True arg.
 conn_b.put("/path/to/some/local/file", "/path/on/the/remote", scp=True)
 
+```
+
+### Connecting Via A Jumphost
+
+There are several ways to specify the jumphost you wish to connect through. There are benefits and drawbacks to each approach.
+
+You can:
+
+- Pass in a string for the URL or IP Address of the Jumphost you wish to target.
+- Pass in an `SSHClient`-like object
+- Pass in a `Connection`-like object
 
 
 
