@@ -1,5 +1,4 @@
-Fabric-Plus
-===========
+# Fabric-Plus
 
 A drop-in expansion of features in the Fabric library.
 
@@ -7,14 +6,12 @@ See [`fabric`](https://github.com/fabric/fabric) for more details, if interested
 
 I may eventually be forking out a version of `paramiko` and `fabric` for the purposes maintaining these as core features of the whole, but for as long as I can, I will be simply providing a drop in replacement for several objects.
 
-Notes
------
+## Notes
 
 - Requires Python 3.8+; typing has been added pretty aggressively throughout the library, and as a result, you will need to have a slightly newer version of python than is technically required by the base `Fabric` library.
 - Changed default host key handling to do "Warning" instead of "AutoAdd" (default currently in `Fabric`)
 
-Installation
-------------
+## Installation
 
 While in development, I am using [`poetry`](https://python-poetry.org/). You can install poetry by either `pip3 install poetry` or `brew install poetry`; for more details, please look at the website linked.
 
@@ -26,8 +23,7 @@ NOTE: I will be adding in `PyPI` and package distributions in a short while. But
 
 Thanks!
 
-Goals
------
+## Goals
 
 A bunch of clients I target in my own use of `fabric` have a few funky features, including *not* supporting SFTP.
 
@@ -39,8 +35,7 @@ This is also true for `paramiko`.
 
 What I needed was a way to do the same thing with a connection.
 
-Features
---------
+## Features
 
 - Provides a drop-in fabric `Connection` replacement called `ConnectionPlus`; should be imported as `Connection`, if desired to be used as a drop-in.
 - Provides a drop-in replacement fabric `Transfer` replacement called `TransferPlus`; should be imported as `Transfer` if desited to be used as a drop-in.
@@ -49,8 +44,64 @@ Features
 - Added a `su` command to the `ConnectionPlus` object; this runs the command using a specified `su` user.
 - Tries to be fully typed, though `Fabric` isn't consistently this way, so some inherited functions and attributes may remain untyped.
 
-Timeline
---------
+## Examples
+
+### Create A Basic Connection As A Drop In Replacement
+
+If you want to create a connection, it is nearly identical to `Fabric` itself.
+
+The only difference is if you want the drop-in replacement, you'll need to import the `ConnectionPlus` object as a `Connection`, as below.
+
+```python3
+from fabricplus.connection import ConnectionPlus as Connection
+
+conn: Connection = Connection("some_host")
+
+# From here, you can do all the things you're used to, like run commands
+conn.run("date")
+
+# But now you can also run an su command as well
+conn.su("date", "otheruser", password="otheruserspassword")
+```
+
+The following examples will work just as well regardless of naming it `Connection` or `ConnectionPlus` via the import.
+
+### Using SCP instead of the default SFTP
+
+By default the `Connection` object will use SFTP, and does not have the capacity to use SCP.
+
+The former is true for `ConnectionPlus` objects, but the latter is definitely not true.
+
+There are two ways to access SCP. First, to set it as the default method via an argument to the initializer.
+
+```python3
+
+from fabricplus.connection import ConnectionPlus
+
+# Add in the scp=True
+conn_a: ConnectionPlus = ConnectionPlus("some_host", scp=True)
+
+# Then run a put command; it will run through SCP!
+conn_a.put("/path/to/some/local/file", "/path/on/the/remote")
+```
+
+You can also do it at the time of the call to `put` or `get`, like so:
+
+```python3
+
+from fabricplus.connection import ConnectionPlus
+
+# leaving out scp=True
+conn_b: ConnectionPlus = ConnectionPlus("some_host")
+
+# we run this with an scp=True arg.
+conn_b.put("/path/to/some/local/file", "/path/on/the/remote", scp=True)
+
+
+
+
+## Timeline
+
 
 - [x] Finish initial feature builds with
   - Interopability with base `Connection`
