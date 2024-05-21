@@ -246,10 +246,11 @@ class ConnectionPlus(Connection):
     
     @property
     def jump_client(self) -> Optional[SSHJumpClient]:
-        """Get the jump client object for the ConnectionPlus object.
-
-        Returns:
-            Optional[SSHJumpClient]: The jump client object for the ConnectionPlus object.
+        """
+        Get the jump client object for the ConnectionPlus object.
+        
+        :return: The jump client object for the ConnectionPlus object.
+        :rtype: Optional[SSHJumpClient]
         """
         try:
             return self.client._jump_session # type: ignore
@@ -258,13 +259,16 @@ class ConnectionPlus(Connection):
         
     def jump_run(self, command: str, timeout: int = 10, **kwargs) -> Optional["Result"]:
         """Run a command on the jumphost.
-
-        Args:
-            command (str): Command to run on the jumphost.
-            timeout (int, optional): Timeout for the command. Defaults to 10.
-
-        Returns:
-            Optional[Result]: Result object from the command execution.
+        
+        :param command: Command to run on the jumphost.
+        :type command: str
+        :param timeout: Timeout for the command. Defaults to 10.
+        :type timeout: int, optional
+        :param kwargs: Additional keyword arguments to pass to the command execution.
+        :type kwargs: Any
+        :raises AttributeError: If the ConnectionPlus object does not have a jump client initialized.
+        :return: Result object from the command execution.
+        :rtype: Optional[Result]
         """
         if self.jump_client is None:
             raise AttributeError("The ConnectionPlus object does not have a jump client initialized.")
@@ -281,6 +285,14 @@ class ConnectionPlus(Connection):
     
     @opens
     def scp(self):
+        """Get the SCP client object for the ConnectionPlus object.
+        
+        Will open an SCP client object if one is not already open.
+
+        :raises AttributeError: If the base fabric Connection object does not have an SSH client initialized.
+        :return: The SCP client object for the ConnectionPlus object.
+        :rtype: SCPClient
+        """
         if self._scp is None:
             try:
                 # Ignoring type because we're handling the exception in cases of Nones.
@@ -298,15 +310,18 @@ class ConnectionPlus(Connection):
     def get(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
         """Get a file from the remote host.
         
-        Args:
-            remote_path (str): The path to the file on the remote host.
-            local_path (str, optional): The path to save the file locally. Defaults to current working dir.
-            scp (bool, optional): If the transfer should be done via SCP. Defaults to False or the Connection value.
-            recursive (bool, optional): If the transfer should be recursive. Defaults to False.
-            preserve_times (bool, optional): If the file times should be preserved. Defaults to False.
-
-        Returns:
-            Optional[fabric.transfer.Result]: Result object from the transfer.
+        :param remote_path: The path to the file on the remote host.
+        :type remote_path: str
+        :param local_path: The path to save the file locally. Defaults to current working dir.
+        :type local_path: str, optional
+        :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
+        :type scp: bool, optional
+        :param recursive: If the transfer should be recursive. Defaults to False.
+        :type recursive: bool, optional
+        :param preserve_times: If the file times should be preserved. Defaults to False.
+        :type preserve_times: bool, optional
+        :return: Result object from the transfer.
+        :rtype: Optional[fabric.transfer.Result]
         """
         _scp: bool = kwargs.pop("scp", None) or self.__scp
         if _scp is True:
@@ -317,17 +332,20 @@ class ConnectionPlus(Connection):
         
         
     def put(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
-        """Get a file from the remote host.
+        """Put a file on the remote host.
         
-        Args:
-            local_path (str): The path to the file locally.
-            remote_path (str, optional): The path to save the file on the remote host. Defaults to current working dir.
-            scp (bool, optional): If the transfer should be done via SCP. Defaults to False or the Connection value.
-            recursive (bool, optional): If the transfer should be recursive. Defaults to False.
-            preserve_times (bool, optional): If the file times should be preserved. Defaults to False.
-
-        Returns:
-            Optional[fabric.transfer.Result]: Result object from the transfer.
+        :param local_path: The path to the file on the local host.
+        :type local_path: str
+        :param remote_path: The path to save the file remotely. Defaults to current working dir for the session.
+        :type remote_path: str, optional
+        :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
+        :type scp: bool, optional
+        :param recursive: If the transfer should be recursive. Defaults to False.
+        :type recursive: bool, optional
+        :param preserve_times: If the file times should be preserved. Defaults to False.
+        :type preserve_times: bool, optional
+        :return: Result object from the transfer.
+        :rtype: Optional[fabric.transfer.Result]
         """
         _scp: bool = kwargs.pop("scp", None) or self.__scp
         if _scp is True:
