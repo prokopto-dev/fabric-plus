@@ -109,7 +109,86 @@ You can:
 - Pass in an `SSHClient`-like object
 - Pass in a `Connection`-like object
 
+Each is detailed below for clarity.
 
+#### Using an IP Address or URL
+
+Here we will generate a ConnectionPlus object via a jumphost passed in as a string argument.
+
+The example could as easily be done with an IP address in the format `XXX.XXX.XXX.XXX`, where `X` is an integer, and `XXX` is together an integer no larger than `255`.
+
+In the example, we will also be using some other user name to log into the jumphost.
+
+This is the only time that the `jump_uname` argument makes any sense, because in all other cases, the host is already logged in via a user.
+
+```python3
+from fabricplus.connection import ConnectionPlus
+
+jumphost_url: str = "jumphost.example.com"
+
+# create the connection object, passing in the URL and a username for the jumphost
+conn_c: ConnectionPlus = ConnectionPlus("some_host", jumphost_target=jumphost_url, jump_uname="jumphost_username")
+
+# from here, you can simply run all your commands on the target host via the standard processes
+conn_c.run("date")
+```
+
+#### Using an SSHClient-like object
+
+So an `SSHClient` (or `SSHJumpClient`, or anything else that inherits from the base `SSHClient` and behaves, roughly, similarly, will work) can be passed through as well.
+
+This is useful for two cases:
+
+1. You want to control some more behaviors about how the `SSHClient` connections
+2. You want to proxy multiple connections VIA the same jumphost connection
+
+Let us do the latter example:
+
+```python3
+from fabricplus.connection import ConnectionPlus
+from fabricplus.paramiko_modifications.client import SSHJumpClient
+
+# Creating the client object
+jumphost_client: SSHJumpClient = SSHJumpClient()
+# Doing some back end stuff for host key handling, because it's often necessary
+jumphost_client.set_missing_host_key_policy(WarningPolicy())
+jumphost_client.load_system_host_keys()
+# then connecting
+jumphost_client.connect("some_jumphost_url")
+
+# create the connection object, passing in the SSHJumpClient object
+conn_c: ConnectionPlus = ConnectionPlus("some_host", jumphost_target=jumphost_client)
+
+# importantly you can REUSE the jumphost_client
+conn_d: ConnectionPlus = ConnectionPlus("some_other_host", jumphost_target=jumphost_client)
+
+# from here, you can simply run all your commands on the target host via the standard processes
+conn_c.run("date")
+conn_d.run("date")
+```
+
+#### Using a Connection-like object
+
+Similar to above, you may also pass in a `Connection`-derived object.
+
+All this does is have the back end extract the `client` from that `Connection` object, and so essentially behaves as above, but the example below should work.
+
+```python3
+from fabricplus.connection import ConnectionPlus
+
+# Creating the client object
+jumphost_connection: ConnectionPlus = ConnectionPlus("some_jumphost_url")
+
+# create the connection object, passing in the ConnectionPlus object
+conn_c: ConnectionPlus = ConnectionPlus("some_host", jumphost_target=jumphost_connection)
+
+# importantly you can REUSE the jumphost_connection
+conn_d: ConnectionPlus = ConnectionPlus("some_other_host", jumphost_target=jumphost_connection)
+
+# from here, you can simply run all your commands on the target host via the standard processes
+conn_c.run("date")
+conn_d.run("date")
+```
 
 ## Timeline
 
@@ -119,7 +198,7 @@ You can:
   - Added `paramiko-jump` compatibility
   - Added `scp` compatibility
   - Added `su` compatibility
-- [ ] Finish typing, docstrings, and consistency checks
+- [x] Finish typing, docstrings, and consistency checks
 - [ ] Set up auto-generating documentation
 - [ ] Set up automated unit testing
 - [ ] Set up automated building
@@ -136,7 +215,6 @@ TODO
 
 - [ ] Add some unit testing
 - [ ] Add documentation, docstrings
-- [ ] Add examples in README.md
 - [ ] Add installation instructions to README.md
 - [ ] Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
 - [ ] Define version compatibility
