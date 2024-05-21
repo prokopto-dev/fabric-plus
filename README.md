@@ -127,7 +127,9 @@ from fabricplus.connection import ConnectionPlus
 jumphost_url: str = "jumphost.example.com"
 
 # create the connection object, passing in the URL and a username for the jumphost
-conn_c: ConnectionPlus = ConnectionPlus("some_host", jumphost_target=jumphost_url, jump_uname="jumphost_username")
+conn_c: ConnectionPlus = ConnectionPlus("some_host",
+                                        jumphost_target=jumphost_url,
+                                        jump_uname="jumphost_username")
 
 # from here, you can simply run all your commands on the target host via the standard processes
 conn_c.run("date")
@@ -157,12 +159,15 @@ jumphost_client.load_system_host_keys()
 jumphost_client.connect("some_jumphost_url")
 
 # create the connection object, passing in the SSHJumpClient object
-conn_c: ConnectionPlus = ConnectionPlus("some_host", jumphost_target=jumphost_client)
+conn_c: ConnectionPlus = ConnectionPlus("some_host",
+                                        jumphost_target=jumphost_client)
 
 # importantly you can REUSE the jumphost_client
-conn_d: ConnectionPlus = ConnectionPlus("some_other_host", jumphost_target=jumphost_client)
+conn_d: ConnectionPlus = ConnectionPlus("some_other_host",
+                                        jumphost_target=jumphost_client)
 
-# from here, you can simply run all your commands on the target host via the standard processes
+# from here, you can simply run all your commands on the target host 
+# via the standard processes
 conn_c.run("date")
 conn_d.run("date")
 ```
@@ -180,12 +185,15 @@ from fabricplus.connection import ConnectionPlus
 jumphost_connection: ConnectionPlus = ConnectionPlus("some_jumphost_url")
 
 # create the connection object, passing in the ConnectionPlus object
-conn_c: ConnectionPlus = ConnectionPlus("some_host", jumphost_target=jumphost_connection)
+conn_c: ConnectionPlus = ConnectionPlus("some_host",
+                                        jumphost_target=jumphost_connection)
 
 # importantly you can REUSE the jumphost_connection
-conn_d: ConnectionPlus = ConnectionPlus("some_other_host", jumphost_target=jumphost_connection)
+conn_d: ConnectionPlus = ConnectionPlus("some_other_host",
+                                        jumphost_target=jumphost_connection)
 
-# from here, you can simply run all your commands on the target host via the standard processes
+# from here, you can simply run all your commands on the target host
+# via the standard processes
 conn_c.run("date")
 conn_d.run("date")
 ```
@@ -220,6 +228,4 @@ TODO
 - [ ] Define version compatibility
 - [ ] including notes about how it works with parallelism for `su` vs `sudo` as a user
 - [ ] Add notes on how to run things in parallel in docs
-- [ ] Add typing to all of the `client.py` file
-- [ ] Add typing to upstream `paramiko-jump` via PR.
 - [ ] Package and deliver via PyPI.
