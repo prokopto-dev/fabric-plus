@@ -8,6 +8,16 @@ Testing is generally done using the ``concurrent.futures`` library, which is a h
 
 The advantage of using ``concurrent.futures`` is that it behaves similar to the way the ``Connection`` object expects to be used, in that it runs in the hopes it works, and resolves errors after rather than interactively.
 
+
+2FA, Jumphosts, and Parallelism
+-------------------------------
+
+TLDR; 2FA/interactive prompts **do not work** in concurrent threads/processes.
+
+If you are using 2FA, either on a jumphost or on the target host, you will need to do so serially.
+
+Because of how the multi-processing/multi-threading libraries work, you will not have a STDIN to respond to the 2FA prompt.
+
 Creating a bunch of connections
 -------------------------------
 
@@ -66,14 +76,14 @@ Here's an example of how one might use ``concurrent.futures`` to run multiple co
                     print(f"Error: {tb}")
 
 
-Important Note on ``SU`` In Parallelism
+Important Note on ``su`` In Parallelism
 ---------------------------------------
 
-The ``SU`` command is a special command that is used to switch users. 
+The ``su`` command is a special command that is used to switch users. 
 
 It is one of the features I built this library for, and it generally works great.
 
-However, on some hosts, the ``SU`` command does NOT work in a non-interactive shell.
+However, on some hosts, the ``su`` command does NOT work in a non-interactive shell.
 
 This is because of some complex kernel behaviors in older versions to avoid a security vulnerability.
 
