@@ -12,6 +12,9 @@ What is Fabric-Plus?
 
 Fabric-Plus is a wrapper around several Fabric sourced objects to provide new functionality not currently a part of the main Fabric library.  This includes:
 
+.. automodule:: fabricplus.connection
+    :members:
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
