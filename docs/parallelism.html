@@ -38,6 +38,12 @@
 <p>It is possible to run multiple connections at the same time, and have them handled in a multi-threaded or multi-processing library.</p>
 <p>Testing is generally done using the <code class="docutils literal notranslate"><span class="pre">concurrent.futures</span></code> library, which is a high-level interface for asynchronously executing functions in a separate thread or process.</p>
 <p>The advantage of using <code class="docutils literal notranslate"><span class="pre">concurrent.futures</span></code> is that it behaves similar to the way the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object expects to be used, in that it runs in the hopes it works, and resolves errors after rather than interactively.</p>
+<section id="fa-jumphosts-and-parallelism">
+<h2>2FA, Jumphosts, and Parallelism<a class="headerlink" href="#fa-jumphosts-and-parallelism" title="Link to this heading">¶</a></h2>
+<p>TLDR; 2FA/interactive prompts <strong>do not work</strong> in concurrent threads/processes.</p>
+<p>If you are using 2FA, either on a jumphost or on the target host, you will need to do so serially.</p>
+<p>Because of how the multi-processing/multi-threading libraries work, you will not have a STDIN to respond to the 2FA prompt.</p>
+</section>
 <section id="creating-a-bunch-of-connections">
 <h2>Creating a bunch of connections<a class="headerlink" href="#creating-a-bunch-of-connections" title="Link to this heading">¶</a></h2>
 <p>Here’s an example of how one might use <code class="docutils literal notranslate"><span class="pre">concurrent.futures</span></code> to run multiple connections at the same time.</p>
@@ -94,10 +100,10 @@
 </div>
 </section>
 <section id="important-note-on-su-in-parallelism">
-<h2>Important Note on <code class="docutils literal notranslate"><span class="pre">SU</span></code> In Parallelism<a class="headerlink" href="#important-note-on-su-in-parallelism" title="Link to this heading">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">SU</span></code> command is a special command that is used to switch users.</p>
+<h2>Important Note on <code class="docutils literal notranslate"><span class="pre">su</span></code> In Parallelism<a class="headerlink" href="#important-note-on-su-in-parallelism" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">su</span></code> command is a special command that is used to switch users.</p>
 <p>It is one of the features I built this library for, and it generally works great.</p>
-<p>However, on some hosts, the <code class="docutils literal notranslate"><span class="pre">SU</span></code> command does NOT work in a non-interactive shell.</p>
+<p>However, on some hosts, the <code class="docutils literal notranslate"><span class="pre">su</span></code> command does NOT work in a non-interactive shell.</p>
 <p>This is because of some complex kernel behaviors in older versions to avoid a security vulnerability.</p>
 <p>Personally, I have found that <code class="docutils literal notranslate"><span class="pre">CentOS</span> <span class="pre">7</span></code> and older, as well as simmilar versions of <code class="docutils literal notranslate"><span class="pre">RHEL</span></code> and <code class="docutils literal notranslate"><span class="pre">Fedora</span></code> have all had the same issue.</p>
 <p>The same may be true for other distributions, but I have found that <code class="docutils literal notranslate"><span class="pre">Debian</span></code> and <code class="docutils literal notranslate"><span class="pre">Ubuntu</span></code> have not had this issue.</p>
@@ -130,8 +136,9 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Running Connections In Parallel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fa-jumphosts-and-parallelism">2FA, Jumphosts, and Parallelism</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-bunch-of-connections">Creating a bunch of connections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#important-note-on-su-in-parallelism">Important Note on <code class="docutils literal notranslate"><span class="pre">SU</span></code> In Parallelism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#important-note-on-su-in-parallelism">Important Note on <code class="docutils literal notranslate"><span class="pre">su</span></code> In Parallelism</a></li>
 </ul>
 </li>
 </ul>
@@ -142,6 +149,9 @@
 <li class="toctree-l1"><a class="reference internal" href="api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/connection.html"><code class="docutils literal notranslate"><span class="pre">connection</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/transfer.html"><code class="docutils literal notranslate"><span class="pre">transfer</span></code></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact</a></li>
 </ul>
 
 <div class="relations">
