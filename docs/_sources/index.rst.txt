@@ -12,6 +12,8 @@ What is Fabric-Plus?
 
 Fabric-Plus is a wrapper around several Fabric sourced objects to provide new functionality not currently a part of the main Fabric library.  This includes:
 
+.. _getting_started:
+
 Getting Started
 ---------------
 
@@ -19,6 +21,28 @@ Getting Started
     :maxdepth: 2
 
     getting-started
+
+.. _contributing:
+
+Concurrency
+-----------
+
+If you'd like a little information on how to run Connections in parallel, here's a small doc with some notes.
+
+.. toctree::
+    :maxdepth: 2
+
+    parallelism
+
+Contributing
+------------
+
+Interested in contributing to Fabric-Plus?  Great!  We have a guide for that!
+
+.. toctree::
+    :maxdepth: 2
+
+    contributing
 
 .. _api-docs:
 
