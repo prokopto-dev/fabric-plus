@@ -4,6 +4,7 @@ import fabric.transfer
 import re
 from invoke.watchers import FailingResponder, Responder
 from paramiko import WarningPolicy, SSHClient, Transport
+
 from scp import SCPClient
 from invoke.exceptions import Failure, ResponseNotAccepted, AuthFailure
 
@@ -12,9 +13,15 @@ from fabricplus.transfer import TransferPlus
 from fabricplus.paramiko_modifications.client import SSHJumpClient, simple_auth_handler
 
 # Typing Imports
-from typing import Optional, Union, Callable, List, Any, TYPE_CHECKING
+from typing import Optional, Union, Callable, List, Any, AnyStr, TYPE_CHECKING, TypeVar
+from paramiko.channel import ChannelFile, ChannelStderrFile
 if TYPE_CHECKING:
     from invoke.runners import Runner, Result
+
+# Type Variable For Connection-Like objects
+Conn = TypeVar("Conn", bound=Connection, covariant=True)
+# Type Variable For SSHClient-Like objects
+Client = Union[SSHJumpClient, SSHClient]
 
 class ConnectionPlus(Connection):
     """ConnectionPlus is a subclass of the Connection object from the Fabric library.
@@ -25,7 +32,7 @@ class ConnectionPlus(Connection):
     """
     def __init__(self,
                  *args,
-                 jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
+                 jumphost_target: Optional[Union[Client, str, Conn]] = None,
                  scp: bool = False,
                  jump_uname: Optional[str] = None,
                  jump_port: Optional[int] = None,
@@ -65,9 +72,11 @@ class ConnectionPlus(Connection):
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
         self.__scp: bool = scp
-        self.client = self.__client_setup(jumphost_target=jumphost_target,
+        self.client: Optional[Client] = self.__client_setup(jumphost_target=jumphost_target,
                                           jump_uname=jump_uname,
                                           jump_port=jump_port)
+        if self.client is None:
+            raise AttributeError("The ConnectionPlus object could not initialize it's client.")
         self.client.set_missing_host_key_policy(WarningPolicy())
         self.client.load_system_host_keys()
     
@@ -98,7 +107,7 @@ class ConnectionPlus(Connection):
         :return: Result object from the command execution.
         :rtype: Optional[Result]
         """
-        _password: str = password or self.connect_kwargs.get("password", None) # type: ignore
+        _password: str = password or self.connect_kwargs.get("password", None)
         if _password is None:
             raise ValueError("The password must be given to run a command as another user.")
         return self._su(runner=self._remote_runner(), command=command, user=user, password=_password, timeout=timeout, pty=True, **kwargs)
@@ -132,7 +141,7 @@ class ConnectionPlus(Connection):
         _prompt: str = "Password: "
         _command: str = self._prefix_commands(command)
         # Escape all double quotes in the command.
-        _cmd_str: str  = f'su - {user} -c "{command}"'.format(user=user, command=_command.replace('"', '\\"'))
+        _cmd_str: str  = f'su - {user} -Conn "{command}"'.format(user=user, command=_command.replace('"', '\\"'))
         _watcher: FailingResponder = FailingResponder(
             pattern=re.escape(_prompt),
             response="{password}\n".format(password=password),
@@ -149,7 +158,7 @@ class ConnectionPlus(Connection):
                 raise failure
 
     def __client_connect(self,
-                         client: Union[SSHJumpClient, SSHClient],
+                         client: Client,
                          username: Optional[str] = None,
                          port: Optional[int] = None) -> None:
         """Connect the client object for the ConnectionPlus object.
@@ -165,6 +174,9 @@ class ConnectionPlus(Connection):
         :param port: Port to connect with. Defaults to None.
         :type port: Optional[str], optional
         """        
+        # Ensure dict-ness
+        if self.connect_kwargs is None:
+            self.connect_kwargs: dict[str, Any] = {}
         # Short-circuit
         if self.is_connected:
             return
@@ -184,12 +196,14 @@ class ConnectionPlus(Connection):
         ):
             raise ValueError(err.format("timeout"))
         # No conflicts -> merge 'em together
-        kwargs = dict(
-            self.connect_kwargs,
-            username=username or self.user,
-            hostname=self.host,
-            port=port or self.port,
-        )
+        kwarg_updates: dict[str, Any] = {
+            "hostname": self.host,
+            "port":port or self.port,
+            "username": username or self.user,
+        }
+        kwargs: dict[str, Any] = (self.connect_kwargs.copy() if self.connect_kwargs
+                                 else kwarg_updates)
+        kwargs.update(kwarg_updates)
         if self.gateway:
             kwargs["sock"] = self.open_gateway()
         if self.connect_timeout:
@@ -217,17 +231,17 @@ class ConnectionPlus(Connection):
                 fabric_config=self.config,
                 username=username or self.user,
             )
-        client.connect(**kwargs) # type: ignore
+        client.connect(**kwargs)
         return None
         
     
     def __client_setup(self,
                          *args,
-                         jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
+                         jumphost_target: Optional[Union[Client, str, Conn]] = None,
                          interactive_prompt: bool = False,
                          jump_uname: Optional[str] = None,
                          jump_port: Optional[int] = None,
-                         **kwargs) -> Union[SSHClient, "SSHJumpClient"]:
+                         **kwargs) -> Optional[Client]:
         """Setup the client object for the ConnectionPlus object.
         
         This method can be used to setup the client object for the ConnectionPlus object.
@@ -245,7 +259,7 @@ class ConnectionPlus(Connection):
         :return: The SSHClient object for the ConnectionPlus object.
         :rtype: Union[SSHClient/SSHJumpClient]
         """
-        _client: Optional[Union[SSHJumpClient, SSHClient]] = None
+        _client: Optional[Client] = None
         _auth_handler: Optional[Callable[..., List[Any]]] = simple_auth_handler if interactive_prompt else None
         if jumphost_target is not None:
             if isinstance(jumphost_target, SSHJumpClient):
@@ -266,17 +280,16 @@ class ConnectionPlus(Connection):
         return SSHJumpClient(*args, jump_session=_client, auth_handler=_auth_handler, **kwargs)
     
     @property
-    def jump_client(self) -> Optional[SSHJumpClient]:
+    def jump_client(self) -> Optional[Client]:
         """
         Get the jump client object for the ConnectionPlus object.
         
         :return: The jump client object for the ConnectionPlus object.
         :rtype: Optional[SSHJumpClient]
         """
-        try:
-            return self.client._jump_session # type: ignore
-        except AttributeError:
-            return None
+        if self.client is None:
+            raise AttributeError("The ConnectionPlus object does not have a client initialized.")
+        return self.client._jump_session if isinstance(self.client, SSHJumpClient) else None
         
     def jump_run(self, command: str, timeout: int = 10, **kwargs) -> Optional["Result"]:
         """Run a command on the jumphost.
@@ -295,9 +308,13 @@ class ConnectionPlus(Connection):
             raise AttributeError("The ConnectionPlus object does not have a jump client initialized.")
         try:
             _timeout: int = kwargs.pop("timeout", timeout)
+            # typehints for exec_command aren't porting over, so do them here
+            # See: PEP-0526 for more information
+            _stderr: ChannelStderrFile
+            _stdout: ChannelFile
             _, _stdout, _stderr = self.jump_client.exec_command(command, timeout=_timeout, **kwargs) or (None, None, None)
-            _stderr_str: str = _stderr.read().decode("utf-8").strip("\n") # type: ignore
-            _stdout_str: str = _stdout.read().decode("utf-8").strip("\n") # type: ignore
+            _stderr_str: str = _stderr.read().decode("utf-8").strip("\n")
+            _stdout_str: str = _stdout.read().decode("utf-8").strip("\n")
             return Result(stdout=_stdout_str, stderr=_stderr_str, exited=0, encoding="utf-8", command=command)
         except Exception as e:
             return Result(stdout="", stderr=str(e), exited=1, encoding="utf-8", command=command)
@@ -305,27 +322,31 @@ class ConnectionPlus(Connection):
         
     
     @opens
-    def scp(self):
+    def scp(self) -> SCPClient:
         """Get the SCP client object for the ConnectionPlus object.
         
         Will open an SCP client object if one is not already open.
 
         :raises AttributeError: If the base fabric Connection object does not have an SSH client initialized.
+        :raises AttributeError: If the base fabric Connection object does not have an SCP client initialized.
+        :raises AttributeError: If the ConnectionPlus object could not initialize it's client.
         :return: The SCP client object for the ConnectionPlus object.
         :rtype: SCPClient
         """
         if self._scp is None:
             try:
-                # Ignoring type because we're handling the exception in cases of Nones.
-                transport: Optional[Transport] = self.client.get_transport() # type: ignore
+                self.open()
+                if self.client is None:
+                        raise AttributeError("The ConnectionPlus object could"
+                                             " not initialize it's client.")
+                transport: Optional[Transport] = self.client.get_transport()
                 if transport is None:
-                    # Connection may not have opened the client yet,
-                    # so lets open the client connection
-                    self.open()
-                    transport = self.client.get_transport()
-                self._scp = SCPClient(transport) # type: ignore
+                    raise AttributeError("The ConnectionPlus object could"
+                                         " not initialize it's transport.")
+                self._scp = SCPClient(transport)
             except AttributeError:
-                raise AttributeError("The base fabric Connection object does not have a client initialized.")
+                raise AttributeError("The base fabric Connection object does "
+                                     "not have a client initialized.")
         return self._scp
 
     def get(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
@@ -341,13 +362,13 @@ class ConnectionPlus(Connection):
         :type recursive: bool, optional
         :param preserve_times: If the file times should be preserved. Defaults to False.
         :type preserve_times: bool, optional
-        :return: Result object from the transfer.
+        :return: Result object from the transfer, or None.
         :rtype: Optional[fabric.transfer.Result]
         """
         _scp: bool = kwargs.pop("scp", None) or self.__scp
         if _scp is True:
-            # Ignoring type because apparently it doesn't like Self@ConnectionPlus
-            return TransferPlus(self).get(*args, **kwargs) # type: ignore
+            TransferPlus(self).get(*args, **kwargs)
+            return None
         else:
             return super().get(*args, **kwargs)
         
@@ -370,7 +391,7 @@ class ConnectionPlus(Connection):
         """
         _scp: bool = kwargs.pop("scp", None) or self.__scp
         if _scp is True:
-            # Ignoring type because apparently it doesn't like Self@ConnectionPlus
-            return TransferPlus(self).put(*args, **kwargs) # type: ignore
+            TransferPlus(self).put(*args, **kwargs)
+            return None
         else:
             return super().put(*args, **kwargs)

@@ -2,9 +2,10 @@ import fabric
 from fabric.transfer import Transfer
 import scp
 
-from typing import Type
-    
-    
+from typing import Union, TypeVar
+
+# Type hint for a fabric Connection object.
+Conn = TypeVar("Conn", bound=fabric.connection.Connection)
 
 class TransferPlus(Transfer):
     """TransferPlus is a subclass of the base fabric Transfer object, overloading
@@ -12,13 +13,13 @@ class TransferPlus(Transfer):
     """
 
     def __init__(self,
-                 connection: Type[fabric.Connection]) -> None:
+                 connection: Conn) -> None:
         """Initializes the TransferPlus object.
 
-        :param connection: A fabric Connection object.
-        :type connection: Type[fabric.Connection]
+        :param connection: A fabric Connection-like object.
+        :type connection: fabric.Connection
         """
-        self.connection: Type[fabric.Connection] = connection
+        self.connection: Conn = connection
 
     @property
     def scp(self) -> scp.SCPClient:
@@ -29,7 +30,7 @@ class TransferPlus(Transfer):
         :rtype: scp.SCPClient
         """
         try:
-            return self.connection.scp() # type: ignore
+            return self.connection.scp()
         except AttributeError:
             raise AttributeError("The base fabric Connection object does not have an SCP client"
                                  ", use ConnectionPlus instead.")
