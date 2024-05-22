@@ -26,13 +26,19 @@ class ConnectionPlus(Connection):
     def __init__(self,
                  *args,
                  jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
-                 scp: bool = False, jump_uname: Optional[str] = None,
+                 scp: bool = False,
+                 jump_uname: Optional[str] = None,
+                 jump_port: Optional[int] = None,
                  **kwargs):
         """Initialize the ConnectionPlus object.
         
         Initializes using the Connection initialization, but also sets up the client object
         for the ConnectionPlus object via a jumphost target.
-
+        
+        See the Connection object documentation for additional arguments.
+        
+        :param args: Additional arguments to pass to the Connection object.
+        :type args: Any
         :param jumphost_target: 
             Jumphost to connect to the host through.
             Can be an instance of SSHJumpClient, SSHClient, URL/IP string,
@@ -48,11 +54,20 @@ class ConnectionPlus(Connection):
             Username for the jumphost if different than the connection.
             Defaults to None.
         :type jump_uname: Optional[str], optional
+        :param jump_port:
+            Port for the jumphost if different than the default SSH_PORT.
+            Defaults to None.
+        :type jump_port: Optional[int], optional
+        :param kwargs:
+            Additional keyword arguments to pass to the Connection object.
+        :type kwargs: Any
         """
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
         self.__scp: bool = scp
-        self.client = self.__client_setup(jumphost_target=jumphost_target, jump_uname=jump_uname)
+        self.client = self.__client_setup(jumphost_target=jumphost_target,
+                                          jump_uname=jump_uname,
+                                          jump_port=jump_port)
         self.client.set_missing_host_key_policy(WarningPolicy())
         self.client.load_system_host_keys()
     
@@ -86,7 +101,7 @@ class ConnectionPlus(Connection):
         _password: str = password or self.connect_kwargs.get("password", None) # type: ignore
         if _password is None:
             raise ValueError("The password must be given to run a command as another user.")
-        return self._su(runner=self._remote_runner(), command=command, password=_password, timeout=timeout, pty=True, **kwargs)
+        return self._su(runner=self._remote_runner(), command=command, user=user, password=_password, timeout=timeout, pty=True, **kwargs)
     
     def _su(self,
             runner: "Runner",
@@ -135,7 +150,8 @@ class ConnectionPlus(Connection):
 
     def __client_connect(self,
                          client: Union[SSHJumpClient, SSHClient],
-                         username: Optional[str] = None) -> None:
+                         username: Optional[str] = None,
+                         port: Optional[int] = None) -> None:
         """Connect the client object for the ConnectionPlus object.
         
         Helps pass in the connect arguments from the Connection object.
@@ -146,6 +162,8 @@ class ConnectionPlus(Connection):
         :type client: Union[SSHJumpClient, SSHClient]
         :param username: Username to connect with. Defaults to None.
         :type username: Optional[str], optional
+        :param port: Port to connect with. Defaults to None.
+        :type port: Optional[str], optional
         """        
         # Short-circuit
         if self.is_connected:
@@ -170,7 +188,7 @@ class ConnectionPlus(Connection):
             self.connect_kwargs,
             username=username or self.user,
             hostname=self.host,
-            port=self.port,
+            port=port or self.port,
         )
         if self.gateway:
             kwargs["sock"] = self.open_gateway()
@@ -208,6 +226,7 @@ class ConnectionPlus(Connection):
                          jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]] = None,
                          interactive_prompt: bool = False,
                          jump_uname: Optional[str] = None,
+                         jump_port: Optional[int] = None,
                          **kwargs) -> Union[SSHClient, "SSHJumpClient"]:
         """Setup the client object for the ConnectionPlus object.
         
@@ -220,6 +239,8 @@ class ConnectionPlus(Connection):
         :type interactive_prompt: bool, optional
         :param jump_uname: Username for jumphost if different than connection. Defaults to None.
         :type jump_uname: Optional[str], optional
+        :param jump_port: Port for the jumphost if different than default SSH_PORT. Defaults to None.
+        :type jump_port: Optional[int], optional
         :raises TypeError: If the jumphost_target is not an instance of SSHJumpClient, SSHClient, URL/IP string, or Connection/ConnectionPlus.
         :return: The SSHClient object for the ConnectionPlus object.
         :rtype: Union[SSHClient/SSHJumpClient]
@@ -235,7 +256,7 @@ class ConnectionPlus(Connection):
                 _client = SSHJumpClient(auth_handler=_auth_handler)
                 _client.set_missing_host_key_policy(WarningPolicy())
                 _client.load_system_host_keys()
-                self.__client_connect(_client, username=jump_uname or self.user)
+                self.__client_connect(_client, username=jump_uname or self.user, port=jump_port)
             elif isinstance(jumphost_target, Connection) or isinstance(jumphost_target, ConnectionPlus):
                 if jumphost_target.client is None:
                     jumphost_target.open()
