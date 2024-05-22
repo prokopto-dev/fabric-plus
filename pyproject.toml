@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "A Python 3.8.10+ wrapper to add in SCP functionality for file transfer in Fabric."
 authors = ["Courtney Caldwell <courtneyccaldwell@gmail.com>"]
 maintainers = ["Courtney Caldwell <courtneyccaldwell@gmail.com>"]
-repository = "https://github.com/prokopto-dev/fabric-scp"
+repository = "https://github.com/prokopto-dev/fabric-plus"
+homepage = "https://fabricplus.prokopto.dev/"
 keywords = ["fabric", "scp", "file transfer", "python", "wrapper", "paramiko", "connection", "transfer"]
 classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
