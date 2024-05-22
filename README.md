@@ -207,7 +207,7 @@ conn_d.run("date")
   - Added `scp` compatibility
   - Added `su` compatibility
 - [x] Finish typing, docstrings, and consistency checks
-- [ ] Set up auto-generating documentation
+- [x] Set up auto-generating documentation
 - [ ] Set up automated unit testing
 - [ ] Set up automated building
 - [ ] Publish 1.0 to PyPI
@@ -230,3 +230,5 @@ TODO
 - [ ] Add notes on how to run things in parallel in docs
 - [ ] Package and deliver via PyPI.
 - [ ] Ensure `Fab CLI Tool` compatibility... hadn't considered that.
+- [ ] Import README into the docs
+- [ ] probably move how the docs work a little

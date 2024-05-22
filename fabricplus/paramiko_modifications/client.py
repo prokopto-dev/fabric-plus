@@ -222,7 +222,7 @@ class SSHJumpClient(SSHClient):
         :param disabled_algorithms:
             A dictionary of disabled algorithms, defaults to None
         :raises ValueError:
-            If jump_session and sock are both provided as arguments; 
+            If jump_session and sock are both provided as arguments;
             they are mutually exclusive
         :return: None
         :rtype: None
