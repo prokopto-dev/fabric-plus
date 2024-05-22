@@ -1,7 +1,7 @@
 import os
 import sys
+from typing import Any
 sys.path.insert(0, os.path.abspath('../..'))
-
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -22,8 +22,14 @@ html_baseurl = 'https://fabricplus.prokopto.dev/'
 
 extensions = ['sphinx.ext.autodoc']
 
-templates_path = ['_templates']
-exclude_patterns = []
+# Autodoc settings
+autodoc_default_options: dict[str, Any] = {
+    "members": True,
+    "special-members": True,
+}
+
+templates_path: list[str] = ['_templates']
+exclude_patterns: list[str] = []
 
 
 # -- Options for HTML output -------------------------------------------------

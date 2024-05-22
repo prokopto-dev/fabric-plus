@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Getting Started &#8212; Fabric-Plus 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="canonical" href="https://fabricplus.prokopto.dev/getting-started.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="paramiko_modifications.client" href="api/client.html" />
+    <link rel="prev" title="Welcome to Fabric-Plus’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
+<p>Welcome! This tutorial highlights the basics of the features added by the <code class="docutils literal notranslate"><span class="pre">FabricPlus</span></code> library;
+for more information on the base <code class="docutils literal notranslate"><span class="pre">Fabric</span></code> library itself, please see the <a class="reference external" href="http://docs.fabfile.org/en/latest/">Fabric documentation</a>.</p>
+<p>This tutorial assumes you are already familiar with the <code class="docutils literal notranslate"><span class="pre">Fabric</span></code> library and its usage.</p>
+<section id="a-note-about-imports">
+<h2>A Note About Imports<a class="headerlink" href="#a-note-about-imports" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">FabricPlus</span></code>, and in turn, it’s <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object, inherits and imports directly from the <code class="docutils literal notranslate"><span class="pre">Fabric</span></code> library.</p>
+<p>It also imports and modifies some things from the <code class="docutils literal notranslate"><span class="pre">paramiko</span></code> library.</p>
+<p>The expected use case for this library is simply to import the <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object, and use that directly.</p>
+<p>But you may want to modify the behavior of underlying objects, or use them directly.</p>
+<p>In this case, importing and using objects from <code class="docutils literal notranslate"><span class="pre">paramiko</span></code>, or <code class="docutils literal notranslate"><span class="pre">invoke</span></code>, just as in the base <code class="docutils literal notranslate"><span class="pre">Fabric</span></code> library, is still possible.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="index.html">Fabric-Plus</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-note-about-imports">A Note About Imports</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/connection.html"><code class="docutils literal notranslate"><span class="pre">connection</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/transfer.html"><code class="docutils literal notranslate"><span class="pre">transfer</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Fabric-Plus’s documentation!</a></li>
+      <li>Next: <a href="api/client.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Courtney Caldwell.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/getting-started.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

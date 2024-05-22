@@ -1,0 +1,5 @@
+==============
+``connection``
+==============
+
+.. automodule:: fabricplus.connection

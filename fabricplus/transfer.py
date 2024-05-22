@@ -17,7 +17,6 @@ class TransferPlus(Transfer):
         """Initializes the TransferPlus object.
 
         :param connection: A fabric Connection-like object.
-        :type connection: fabric.Connection
         """
         self.connection: Conn = connection
 
@@ -39,15 +38,10 @@ class TransferPlus(Transfer):
         """Get a file from the remote host.
         
         :param remote_path: The path to the file on the remote host.
-        :type remote_path: str
         :param local_path: The path to save the file locally. Defaults to current working dir.
-        :type local_path: str, optional
         :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
-        :type scp: bool, optional
         :param recursive: If the transfer should be recursive. Defaults to False.
-        :type recursive: bool, optional
         :param preserve_times: If the file times should be preserved. Defaults to False.
-        :type preserve_times: bool, optional
         :return: None
         :rtype: None
         """
@@ -57,15 +51,10 @@ class TransferPlus(Transfer):
         """Put a file on the remote host.
         
         :param local_path: The path to the file on the local host.
-        :type local_path: str
         :param remote_path: The path to save the file remotely. Defaults to current working dir for the session.
-        :type remote_path: str, optional
         :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
-        :type scp: bool, optional
         :param recursive: If the transfer should be recursive. Defaults to False.
-        :type recursive: bool, optional
         :param preserve_times: If the file times should be preserved. Defaults to False.
-        :type preserve_times: bool, optional
         :return: None
         :rtype: None
         """

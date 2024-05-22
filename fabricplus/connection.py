@@ -45,29 +45,23 @@ class ConnectionPlus(Connection):
         See the Connection object documentation for additional arguments.
         
         :param args: Additional arguments to pass to the Connection object.
-        :type args: Any
         :param jumphost_target: 
             Jumphost to connect to the host through.
             Can be an instance of SSHJumpClient, SSHClient, URL/IP string,
             or Connection/ConnectionPlus.
             Defaults to None.
-        :type jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]], optional
         :param scp:
             Boolean value to define if the ConnectionPlus object should
             use SCP for file transfers.
             Defaults to False.
-        :type scp: bool, optional
         :param jump_uname:
             Username for the jumphost if different than the connection.
             Defaults to None.
-        :type jump_uname: Optional[str], optional
         :param jump_port:
             Port for the jumphost if different than the default SSH_PORT.
             Defaults to None.
-        :type jump_port: Optional[int], optional
         :param kwargs:
             Additional keyword arguments to pass to the Connection object.
-        :type kwargs: Any
         """
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
@@ -94,15 +88,10 @@ class ConnectionPlus(Connection):
         some systems due to the way su is implemented (e.g. it may require a tty).
 
         :param command: Command to run in su.
-        :type command: str
         :param user: User to run the command as.
-        :type user: str
         :param password: Password for the target user. Needed, but defaults to None.
-        :type password: Optional[str]
         :param timeout: Timeout for the command. Defaults to 10.
-        :type timeout: int, optional
         :param kwargs: Additional keyword arguments to pass to the command execution.
-        :type kwargs: Any
         :raises ValueError: If the password is not given.
         :return: Result object from the command execution.
         :rtype: Optional[Result]
@@ -122,17 +111,11 @@ class ConnectionPlus(Connection):
         """Internal representation to run a command as another user, via su.
         
         :param runner: The runner object to run the command.
-        :type runner: Runner
         :param command: Command to run in su.
-        :type command: str
         :param user: User to run the command as.
-        :type user: str
         :param password: Password for the target user. Needed, but defaults to None.
-        :type password: Optional[str]
         :param timeout: Timeout for the command. Defaults to 10.
-        :type timeout: int, optional
         :param kwargs: Additional keyword arguments to pass to the command execution.
-        :type kwargs: Any
         :raises AuthFailure: If the authentication fails.
         :raises failure: If the command execution fails.
         :return: Result object from the command execution.
@@ -168,11 +151,8 @@ class ConnectionPlus(Connection):
         These include some loaded from SSH Config.
         
         :param client: The client object to connect.
-        :type client: Union[SSHJumpClient, SSHClient]
         :param username: Username to connect with. Defaults to None.
-        :type username: Optional[str], optional
         :param port: Port to connect with. Defaults to None.
-        :type port: Optional[str], optional
         """        
         # Ensure dict-ness
         if self.connect_kwargs is None:
@@ -248,13 +228,9 @@ class ConnectionPlus(Connection):
         But it also can be used to setup the jumphost for the ConnectionPlus object.
         
         :param jumphost_target: Jumphost to run all actions through for this client. Defaults to None.
-        :type jumphost_target: Optional[Union[SSHJumpClient, SSHClient, str, Connection]], optional
         :param interactive_prompt: Whether to use an interactive method for the jumphost connectivity. Defaults to False.
-        :type interactive_prompt: bool, optional
         :param jump_uname: Username for jumphost if different than connection. Defaults to None.
-        :type jump_uname: Optional[str], optional
         :param jump_port: Port for the jumphost if different than default SSH_PORT. Defaults to None.
-        :type jump_port: Optional[int], optional
         :raises TypeError: If the jumphost_target is not an instance of SSHJumpClient, SSHClient, URL/IP string, or Connection/ConnectionPlus.
         :return: The SSHClient object for the ConnectionPlus object.
         :rtype: Union[SSHClient/SSHJumpClient]
@@ -295,11 +271,8 @@ class ConnectionPlus(Connection):
         """Run a command on the jumphost.
         
         :param command: Command to run on the jumphost.
-        :type command: str
         :param timeout: Timeout for the command. Defaults to 10.
-        :type timeout: int, optional
         :param kwargs: Additional keyword arguments to pass to the command execution.
-        :type kwargs: Any
         :raises AttributeError: If the ConnectionPlus object does not have a jump client initialized.
         :return: Result object from the command execution.
         :rtype: Optional[Result]
@@ -353,15 +326,10 @@ class ConnectionPlus(Connection):
         """Get a file from the remote host.
         
         :param remote_path: The path to the file on the remote host.
-        :type remote_path: str
         :param local_path: The path to save the file locally. Defaults to current working dir.
-        :type local_path: str, optional
         :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
-        :type scp: bool, optional
         :param recursive: If the transfer should be recursive. Defaults to False.
-        :type recursive: bool, optional
         :param preserve_times: If the file times should be preserved. Defaults to False.
-        :type preserve_times: bool, optional
         :return: Result object from the transfer, or None.
         :rtype: Optional[fabric.transfer.Result]
         """
@@ -377,15 +345,10 @@ class ConnectionPlus(Connection):
         """Put a file on the remote host.
         
         :param local_path: The path to the file on the local host.
-        :type local_path: str
         :param remote_path: The path to save the file remotely. Defaults to current working dir for the session.
-        :type remote_path: str, optional
         :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
-        :type scp: bool, optional
         :param recursive: If the transfer should be recursive. Defaults to False.
-        :type recursive: bool, optional
         :param preserve_times: If the file times should be preserved. Defaults to False.
-        :type preserve_times: bool, optional
         :return: Result object from the transfer.
         :rtype: Optional[fabric.transfer.Result]
         """

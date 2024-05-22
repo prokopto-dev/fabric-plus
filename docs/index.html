@@ -14,6 +14,7 @@
     <link rel="canonical" href="https://fabricplus.prokopto.dev/index.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting-started.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -39,151 +40,27 @@
 <section id="what-is-fabric-plus">
 <h2>What is Fabric-Plus?<a class="headerlink" href="#what-is-fabric-plus" title="Link to this heading">¶</a></h2>
 <p>Fabric-Plus is a wrapper around several Fabric sourced objects to provide new functionality not currently a part of the main Fabric library.  This includes:</p>
-<dl class="py class" id="module-fabricplus.connection">
-<dt class="sig sig-object py" id="fabricplus.connection.ConnectionPlus">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fabricplus.connection.</span></span><span class="sig-name descname"><span class="pre">ConnectionPlus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jumphost_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SSHJumpClient</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SSHClient</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Conn</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jump_uname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jump_port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fabricplus.connection.ConnectionPlus" title="Link to this definition">¶</a></dt>
-<dd><p>ConnectionPlus is a subclass of the Connection object from the Fabric library.</p>
-<p>This subclass provides additional functionality to the Connection object, such as SCP transfers,
-running commands as another user, and running commands on a jumphost, as well as connecting to 
-a host through a jumphost.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="fabricplus.connection.ConnectionPlus.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#fabricplus.connection.ConnectionPlus.get" title="Link to this definition">¶</a></dt>
-<dd><p>Get a file from the remote host.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>remote_path</strong> (<em>str</em>) – The path to the file on the remote host.</p></li>
-<li><p><strong>local_path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to save the file locally. Defaults to current working dir.</p></li>
-<li><p><strong>scp</strong> (<em>bool</em><em>, </em><em>optional</em>) – If the transfer should be done via SCP. Defaults to False or the Connection value.</p></li>
-<li><p><strong>recursive</strong> (<em>bool</em><em>, </em><em>optional</em>) – If the transfer should be recursive. Defaults to False.</p></li>
-<li><p><strong>preserve_times</strong> (<em>bool</em><em>, </em><em>optional</em>) – If the file times should be preserved. Defaults to False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Result object from the transfer, or None.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[fabric.transfer.Result]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="fabricplus.connection.ConnectionPlus.jump_client">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jump_client</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SSHJumpClient</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SSHClient</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#fabricplus.connection.ConnectionPlus.jump_client" title="Link to this definition">¶</a></dt>
-<dd><p>Get the jump client object for the ConnectionPlus object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The jump client object for the ConnectionPlus object.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Optional[SSHJumpClient]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="fabricplus.connection.ConnectionPlus.jump_run">
-<span class="sig-name descname"><span class="pre">jump_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#fabricplus.connection.ConnectionPlus.jump_run" title="Link to this definition">¶</a></dt>
-<dd><p>Run a command on the jumphost.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>command</strong> (<em>str</em>) – Command to run on the jumphost.</p></li>
-<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – Timeout for the command. Defaults to 10.</p></li>
-<li><p><strong>kwargs</strong> (<em>Any</em>) – Additional keyword arguments to pass to the command execution.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>AttributeError</strong> – If the ConnectionPlus object does not have a jump client initialized.</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Result object from the command execution.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Optional[Result]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="fabricplus.connection.ConnectionPlus.put">
-<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#fabricplus.connection.ConnectionPlus.put" title="Link to this definition">¶</a></dt>
-<dd><p>Put a file on the remote host.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>local_path</strong> (<em>str</em>) – The path to the file on the local host.</p></li>
-<li><p><strong>remote_path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to save the file remotely. Defaults to current working dir for the session.</p></li>
-<li><p><strong>scp</strong> (<em>bool</em><em>, </em><em>optional</em>) – If the transfer should be done via SCP. Defaults to False or the Connection value.</p></li>
-<li><p><strong>recursive</strong> (<em>bool</em><em>, </em><em>optional</em>) – If the transfer should be recursive. Defaults to False.</p></li>
-<li><p><strong>preserve_times</strong> (<em>bool</em><em>, </em><em>optional</em>) – If the file times should be preserved. Defaults to False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Result object from the transfer.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[fabric.transfer.Result]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="fabricplus.connection.ConnectionPlus.scp">
-<span class="sig-name descname"><span class="pre">scp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SCPClient</span></span></span><a class="headerlink" href="#fabricplus.connection.ConnectionPlus.scp" title="Link to this definition">¶</a></dt>
-<dd><p>Get the SCP client object for the ConnectionPlus object.</p>
-<p>Will open an SCP client object if one is not already open.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>AttributeError</strong> – If the base fabric Connection object does not have an SSH client initialized.</p></li>
-<li><p><strong>AttributeError</strong> – If the base fabric Connection object does not have an SCP client initialized.</p></li>
-<li><p><strong>AttributeError</strong> – If the ConnectionPlus object could not initialize it’s client.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The SCP client object for the ConnectionPlus object.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>SCPClient</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="fabricplus.connection.ConnectionPlus.su">
-<span class="sig-name descname"><span class="pre">su</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#fabricplus.connection.ConnectionPlus.su" title="Link to this definition">¶</a></dt>
-<dd><p>Run a command as another user, via su.</p>
-<p>Requires the target user’s password be given, either directly, or via the ConnectionPlus object.</p>
-<p>Note: This method doesn’t work on Windows, as Windows doesn’t have su, nor does it work in parallel on
-some systems due to the way su is implemented (e.g. it may require a tty).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>command</strong> (<em>str</em>) – Command to run in su.</p></li>
-<li><p><strong>user</strong> (<em>str</em>) – User to run the command as.</p></li>
-<li><p><strong>password</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Password for the target user. Needed, but defaults to None.</p></li>
-<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – Timeout for the command. Defaults to 10.</p></li>
-<li><p><strong>kwargs</strong> (<em>Any</em>) – Additional keyword arguments to pass to the command execution.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the password is not given.</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Result object from the command execution.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Optional[Result]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#a-note-about-imports">A Note About Imports</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="api">
+<span id="api-docs"></span><h2>API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h2>
+<p>Just here to figure out how the API works?</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/connection.html"><code class="docutils literal notranslate"><span class="pre">connection</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/transfer.html"><code class="docutils literal notranslate"><span class="pre">transfer</span></code></a></li>
+</ul>
 </div>
 </section>
 </section>
@@ -216,11 +93,20 @@ some systems due to the way su is implemented (e.g. it may require a tty).</p>
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/connection.html"><code class="docutils literal notranslate"><span class="pre">connection</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/transfer.html"><code class="docutils literal notranslate"><span class="pre">transfer</span></code></a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="getting-started.html" title="next chapter">Getting Started</a></li>
   </ul></li>
 </ul>
 </div>

@@ -229,3 +229,4 @@ TODO
 - [ ] including notes about how it works with parallelism for `su` vs `sudo` as a user
 - [ ] Add notes on how to run things in parallel in docs
 - [ ] Package and deliver via PyPI.
+- [ ] Ensure `Fab CLI Tool` compatibility... hadn't considered that.

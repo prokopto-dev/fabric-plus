@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>paramiko_modifications.client &#8212; Fabric-Plus 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="canonical" href="https://fabricplus.prokopto.dev/api/client.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="connection" href="connection.html" />
+    <link rel="prev" title="Getting Started" href="../getting-started.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-fabricplus.paramiko_modifications.client">
+<span id="paramiko-modifications-client"></span><h1><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code><a class="headerlink" href="#module-fabricplus.paramiko_modifications.client" title="Link to this heading">¶</a></h1>
+<p>Objects provided by this module:</p>
+<blockquote>
+<div><p><a class="reference internal" href="#fabricplus.paramiko_modifications.client.SSHJumpClient" title="fabricplus.paramiko_modifications.client.SSHJumpClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSHJumpClient</span></code></a>
+<a class="reference internal" href="#fabricplus.paramiko_modifications.client.DummyAuthHandler" title="fabricplus.paramiko_modifications.client.DummyAuthHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">DummyAuthHandler</span></code></a>
+<a class="reference internal" href="#fabricplus.paramiko_modifications.client.jump_host" title="fabricplus.paramiko_modifications.client.jump_host"><code class="xref py py-func docutils literal notranslate"><span class="pre">jump_host()</span></code></a>
+<a class="reference internal" href="#fabricplus.paramiko_modifications.client.simple_auth_handler" title="fabricplus.paramiko_modifications.client.simple_auth_handler"><code class="xref py py-func docutils literal notranslate"><span class="pre">simple_auth_handler()</span></code></a></p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.DummyAuthHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fabricplus.paramiko_modifications.client.</span></span><span class="sig-name descname"><span class="pre">DummyAuthHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.DummyAuthHandler" title="Link to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Stateful auth handler for paramiko that will return a list of</dt><dd><p>auth parameters for every CLI prompt</p>
+</dd>
+</dl>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">paramiko_jump</span> <span class="kn">import</span> <span class="n">DummyAuthHandler</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">DummyAuthHandler</span><span class="p">([</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span><span class="p">()</span>
+<span class="go">[&#39;password&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span><span class="p">()</span>
+<span class="go">[&#39;1&#39;]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.DummyAuthHandler.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.DummyAuthHandler.__call__" title="Link to this definition">¶</a></dt>
+<dd><p>Call self as a function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.DummyAuthHandler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.DummyAuthHandler.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.DummyAuthHandler.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.DummyAuthHandler.__weakref__" title="Link to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.SSHJumpClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fabricplus.paramiko_modifications.client.</span></span><span class="sig-name descname"><span class="pre">SSHJumpClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jump_session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SSHClient</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_handler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.SSHJumpClient" title="Link to this definition">¶</a></dt>
+<dd><p>Manage an SSH session which is optionally being proxied
+through a Jump Host.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.SSHJumpClient.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jump_session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SSHClient</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_handler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.SSHJumpClient.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>SSHJumpClient constructor, which is a subclass of
+paramiko.client.SSHClient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jump_session</strong> – If provided, proxy SSH connections through the another
+instance of SSHClient.</p></li>
+<li><p><strong>auth_handler</strong> – If provided, keyboard-interactive authentication will be
+implemented, using this handler as the callback. If this
+is set to None, use Paramiko’s default authentication
+algorithm instead of forcing keyboard-interactive
+authentication.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.SSHJumpClient.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.SSHJumpClient.__repr__" title="Link to this definition">¶</a></dt>
+<dd><p>Return repr(self).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The class name and the jump session and auth handler.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.SSHJumpClient.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.SSHJumpClient.__str__" title="Link to this definition">¶</a></dt>
+<dd><p>String representation of the object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The class name.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.SSHJumpClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">22</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pkey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PKey</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_for_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sock</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">socket</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gss_auth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gss_kex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gss_deleg_creds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gss_host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">banner_timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gss_trust_dns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passphrase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disabled_algorithms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.SSHJumpClient.connect" title="Link to this definition">¶</a></dt>
+<dd><p>Connect to an SSH server and authenticate to it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hostname</strong> – Hostname or IP address of the remote host.</p></li>
+<li><p><strong>port</strong> – Port number of the remote host, defaults to SSH_PORT (22)</p></li>
+<li><p><strong>username</strong> – Username to authenticate as, defaults to None</p></li>
+<li><p><strong>password</strong> – Password to authenticate with, defaults to None</p></li>
+<li><p><strong>pkey</strong> – PKey object for private key, defaults to None</p></li>
+<li><p><strong>key_filename</strong> – Filename of the private key file, defaults to None</p></li>
+<li><p><strong>timeout</strong> – Timeout for the TCP connect, defaults to None</p></li>
+<li><p><strong>allow_agent</strong> – Set to False to disable connecting to the SSH agent, defaults to True</p></li>
+<li><p><strong>look_for_keys</strong> – Set to False to disable searching for discoverable private key files, defaults to True</p></li>
+<li><p><strong>compress</strong> – Set to True to turn on compression, defaults to False</p></li>
+<li><p><strong>sock</strong> – Existing socket to use for connection, defaults to None</p></li>
+<li><p><strong>gss_auth</strong> – Set to True to allow GSS-API authentication, defaults to False</p></li>
+<li><p><strong>gss_kex</strong> – Set to True to allow GSS-API key exchange, defaults to False</p></li>
+<li><p><strong>gss_deleg_creds</strong> – Set to True to delegate GSS-API credentials from client to server, defaults to True</p></li>
+<li><p><strong>gss_host</strong> – Hostname to use in GSS-API authentication, defaults to None</p></li>
+<li><p><strong>banner_timeout</strong> – Timeout for the banner message, defaults to None</p></li>
+<li><p><strong>auth_timeout</strong> – Timeout for authentication, defaults to None</p></li>
+<li><p><strong>gss_trust_dns</strong> – Set to False to disable DNS lookups for GSS-API, defaults to True</p></li>
+<li><p><strong>passphrase</strong> – Passphrase to use for private key, defaults to None</p></li>
+<li><p><strong>disabled_algorithms</strong> – A dictionary of disabled algorithms, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If jump_session and sock are both provided as arguments; 
+they are mutually exclusive</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.jump_host">
+<span class="sig-prename descclassname"><span class="pre">fabricplus.paramiko_modifications.client.</span></span><span class="sig-name descname"><span class="pre">jump_host</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_handler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_for_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_add_missing_key_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span></span></span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.jump_host" title="Link to this definition">¶</a></dt>
+<dd><section id="id1">
+<h2>Example<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">paramiko_jump</span> <span class="kn">import</span> <span class="n">SSHJumpClient</span><span class="p">,</span> <span class="n">simple_auth_handler</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">jump_host</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;jump-host&#39;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jump</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">target</span> <span class="o">=</span> <span class="n">SSHJumpClient</span><span class="p">(</span><span class="n">jump_session</span><span class="o">=</span><span class="n">jumper</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">target</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;target-host&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;target-user&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">_</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s1">&#39;sh ver&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">target</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">param hostname<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The hostname of the jump host.</p>
+</dd>
+<dt class="field-even">param username<span class="colon">:</span></dt>
+<dd class="field-even"><p>The username used to authenticate with the jump host.</p>
+</dd>
+<dt class="field-odd">param password<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Password used to authenticate with the jump host.</p>
+</dd>
+<dt class="field-even">param auth_handler<span class="colon">:</span></dt>
+<dd class="field-even"><p>If provided, keyboard-interactive authentication will be
+implemented, using this handler as the callback. If this
+is set to None, use Paramiko’s default authentication
+algorithm instead of forcing keyboard-interactive
+authentication.</p>
+</dd>
+<dt class="field-odd">param look_for_keys<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Gives Paramiko permission to look around in our ~/.ssh
+folder to discover SSH keys on its own (Default False)</p>
+</dd>
+<dt class="field-even">param auto_add_missing_key_policy<span class="colon">:</span></dt>
+<dd class="field-even"><p>If set to True, setting the missing host key policy on the jump is set
+to auto add policy. (Default False)</p>
+</dd>
+<dt class="field-odd">return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Connected SSHJumpClient instance context.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="fabricplus.paramiko_modifications.client.simple_auth_handler">
+<span class="sig-prename descclassname"><span class="pre">fabricplus.paramiko_modifications.client.</span></span><span class="sig-name descname"><span class="pre">simple_auth_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instructions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnyStr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">AnyStr</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="headerlink" href="#fabricplus.paramiko_modifications.client.simple_auth_handler" title="Link to this definition">¶</a></dt>
+<dd><p>Authentication callback, for keyboard-interactive
+authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> – Displayed to the end user before anything else.</p></li>
+<li><p><strong>instructions</strong> – Displayed to the end user. Typically contains text explaining
+the authentication scheme and / or legal disclaimers.</p></li>
+<li><p><strong>prompt_list</strong> – A Sequence of (AnyStr, bool). Each string element is
+displayed as an end-user input prompt. The corresponding
+boolean element indicates whether the user input should
+be ‘echoed’ back to the terminal during the interaction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of user input, in the order that the prompts were
+presented.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[AnyStr]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">Fabric-Plus</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="connection.html"><code class="docutils literal notranslate"><span class="pre">connection</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="transfer.html"><code class="docutils literal notranslate"><span class="pre">transfer</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../getting-started.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="connection.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">connection</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Courtney Caldwell.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/client.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
