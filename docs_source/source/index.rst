@@ -58,6 +58,17 @@ Just here to figure out how the API works?
     api/*
 
 
+.. _contact:
+
+Contact
+-------
+
+If you need to get in touch about a bug, issue in the docs, or clarification, see the page below!
+
+.. toctree::
+    :maxdepth: 2
+
+    contact
 
 Indices and tables
 ==================
