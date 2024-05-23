@@ -1,6 +1,6 @@
-===============
+***************
 Getting Started
-===============
+***************
 
 Welcome! This tutorial highlights the basics of the features added by the ``FabricPlus`` library;
 for more information on the base ``Fabric`` library itself, please see the `Fabric documentation <http://docs.fabfile.org/en/latest/>`_.
@@ -8,7 +8,7 @@ for more information on the base ``Fabric`` library itself, please see the `Fabr
 This tutorial assumes you are already familiar with the ``Fabric`` library and its usage.
 
 A Note About Imports
---------------------
+====================
 
 ``FabricPlus``, and in turn, it's ``ConnectionPlus`` object, inherits and imports directly from the ``Fabric`` library.
 
@@ -21,7 +21,7 @@ But you may want to modify the behavior of underlying objects, or use them direc
 In this case, importing and using objects from ``paramiko``, or ``invoke``, just as in the base ``Fabric`` library, is still possible.
 
 Installation
-------------
+============
 
 As of ``FabricPlus`` version 0.1.0, the library is available on PyPI at the `FabricPlus Project Page <https://pypi.org/project/fabricplus/>`_.
 
@@ -49,11 +49,11 @@ Or, if you prefer to install from source (requires ``poetry``):
     The version number may change, so be sure to check the version number of the wheel file you build.
 
 Using ``ConnectionPlus`` As A Drop-In Replacement for ``Fabric``'s ``Connection``
--------------------------------------------------------------------------------------
+=================================================================================
 
 
 Create A Basic Connection As A Drop In Replacement
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------------------
 
 If you want to create a connection, it is nearly identical to ``Fabric`` itself.
 
@@ -75,7 +75,7 @@ The only difference is if you want the drop-in replacement, you'll need to impor
 The following examples will work just as well regardless of naming it ``Connection`` or ``ConnectionPlus`` via the import.
 
 Using SCP instead of the default SFTP
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------
 
 By default the ``Connection`` object will use SFTP, and does not have the capacity to use SCP.
 
@@ -106,7 +106,7 @@ You can also do it at the time of the call to ``put`` or ``get``, like so:
     conn_b.put("/path/to/some/local/file", "/path/on/the/remote", scp=True)
 
 Connecting Via A Jumphost
--------------------------
+=========================
 
 There are several ways to specify the jumphost you wish to connect through. There are benefits and drawbacks to each approach.
 
@@ -119,7 +119,7 @@ You can:
 Each is detailed below for clarity.
 
 Using an IP Address or URL
-""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here we will generate a ConnectionPlus object via a jumphost passed in as a string argument.
 
@@ -144,7 +144,7 @@ This is the only time that the ``jump_uname`` argument makes any sense, because 
     conn_c.run("date")
 
 Using an SSHClient-like object
-""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 So an ``SSHClient`` (or ``SSHJumpClient``, or anything else that inherits from the base ``SSHClient`` and behaves, roughly, similarly, will work) can be passed through as well.
 
@@ -182,7 +182,7 @@ Let us do the latter example:
     conn_d.run("date")
 
 Using a Connection-like object
-""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Similar to above, you may also pass in a ``Connection``-derived object.
 
