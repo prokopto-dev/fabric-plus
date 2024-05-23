@@ -1,3 +1,7 @@
 # Build docs on commit
 
 sphinx-build docs_source/source docs/
+
+# Add everything in docs folder to commit
+
+git add docs/*
