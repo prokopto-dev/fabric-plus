@@ -1,11 +1,15 @@
 .. image:: https://img.shields.io/pypi/v/fabricplus
    :alt: PyPI - Version
+   :target: https://pypi.org/project/fabricplus/
 .. image:: https://img.shields.io/pypi/pyversions/fabricplus
    :alt: PyPI - Python Version
+   :target: https://pypi.org/project/fabricplus/
 .. image:: https://img.shields.io/pypi/l/fabricplus
    :alt: PyPI - License
+   :target: https://pypi.org/project/fabricplus/
 .. image:: https://img.shields.io/badge/GitHub-FabricPlus-blue?style=flat&logo=github&link=https%3A%2F%2Fgithub.com%2Fprokopto-dev%2Ffabric-plus
    :alt: Static Badge
+   :target: https://github.com/prokopto-dev/fabric-plus
 
 Welcome to FabricPlus's documentation!
 ======================================
