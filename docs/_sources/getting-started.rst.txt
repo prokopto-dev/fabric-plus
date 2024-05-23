@@ -158,6 +158,7 @@ Let us do the latter example:
 
     from fabricplus.connection import ConnectionPlus
     from fabricplus.paramiko_modifications.client import SSHJumpClient
+    from paramiko.client import WarningPolicy
 
     # Creating the client object
     jumphost_client: SSHJumpClient = SSHJumpClient()
