@@ -6,47 +6,59 @@
 
 A drop-in expansion of features in the Fabric library.
 
-See [`fabric`](https://github.com/fabric/fabric) for more details, if interested in the underlying behaviors. Some have been changed: see Important Changes and the documentation for more information.
+As of version `0.1.0`, those include:
 
-I may eventually be forking out a version of `paramiko` and `fabric` for the purposes maintaining these as core features of the whole, but for as long as I can, I will be simply providing a drop in replacement for several objects.
+- Jumphost connectivity support
+  - `jump_run` command to run commands from the intermediate jumphost
+- SCP Transfer support (including via a jumphost)
+- `su` command support
 
-## Notes
+See the API documentation on the [FabricPlus Website](https://fabricplus.prokopto.dev/) for more information, as well as "Getting Started" guide.
 
-- Requires Python 3.8+; typing has been added pretty aggressively throughout the library, and as a result, you will need to have a slightly newer version of python than is technically required by the base `Fabric` library.
-- Changed default host key handling to do "Warning" instead of "AutoAdd" (default currently in `Fabric`)
+See [`fabric`](https://github.com/fabric/fabric) for more details on the base `fabric` library, if interested in the underlying behaviors. Some have been changed: see Important Changes and the documentation for more information.
 
 ## Installation
 
-While in development, I am using [`poetry`](https://python-poetry.org/). You can install poetry by either `pip3 install poetry` or `brew install poetry`; for more details, please look at the website linked.
+### pip (via PyPI)
 
-To build a version, just run `poetry build` from the cloned repo base.
+As of version `0.1.0`, FabricPlus is available via `pip` and is on the Python Package Index.
 
-It should handle all other dependency needs on the backend.
+To install, simply install `fabricplus`.
 
-NOTE: I will be adding in `PyPI` and package distributions in a short while. But if you need it as an installed package at `v0.1.0`, please do it as defined above.
+```bash
+pip install fabricplus
+```
 
-Thanks!
+### Building From Source
 
-## Goals
+You can also build `fabricplus` from source, especially if you want features or updates released outside of a tagged release on `PyPI`.
 
-A bunch of clients I target in my own use of `fabric` have a few funky features, including *not* supporting SFTP.
+To do so, you'll need `poetry`, and an environment with a version of Python greater than or equal to `3.8`.
 
-As of time of writing (20240516), `fabric` only supports `sftp` protocol for it's transfer.
+#### Step 1: Install Poetry
 
-This is also true for `paramiko`.
+To install `poetry`, simply run:
 
-[`scp.py`](https://github.com/jbardin/scp.py) does a fine job of handling taking a transport from an `SSHClient` and turning it into an `SCPClient`.
+```bash
+pip install poetry
+```
 
-What I needed was a way to do the same thing with a connection.
+For more information on `poetry`, see the [Poetry Website](https://python-poetry.org/).
 
-## Features
+#### Step 2: Clone Repo and Run `poetry build`
 
-- Provides a drop-in fabric `Connection` replacement called `ConnectionPlus`; should be imported as `Connection`, if desired to be used as a drop-in.
-- Provides a drop-in replacement fabric `Transfer` replacement called `TransferPlus`; should be imported as `Transfer` if desited to be used as a drop-in.
-- Works with [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) by [@andrewschenck](https://github.com/andrewschenck), allowing for `scp` file transfers via jumphost connections.
-  - Added `jump_run` command to run commands from jumphost itself, if needed.
-- Added a `su` command to the `ConnectionPlus` object; this runs the command using a specified `su` user.
-- Tries to be fully typed, though `Fabric` isn't consistently this way, so some inherited functions and attributes may remain untyped.
+Once you have that installed, clone the repo, then run `poetry build` from the root directory:
+
+```bash
+# Clone
+git clone https://github.com/prokopto-dev/fabric-plus
+# Move into fabric-plus
+cd fabric-plus
+# Run poetry build
+poetry build
+# install with pip the newly build wheel file (file name may vary)
+pip install dist/fabricplus-0.1.0-py3-none-any.whl
+```
 
 ## Examples
 
@@ -226,13 +238,8 @@ TODO
 ----
 
 - [ ] Add some unit testing
-- [ ] Add documentation, docstrings
+- [ ] Move and expand quick start info
 - [ ] Add installation instructions to README.md
 - [ ] Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
-- [ ] Define version compatibility
-- [ ] including notes about how it works with parallelism for `su` vs `sudo` as a user
-- [ ] Add notes on how to run things in parallel in docs
-- [ ] Package and deliver via PyPI.
+- [ ] Define version compatibility for Fabric/Invoke/Paramiko
 - [ ] Ensure `Fab CLI Tool` compatibility... hadn't considered that.
-- [ ] Import README into the docs
-- [ ] probably move how the docs work a little
