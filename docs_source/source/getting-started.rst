@@ -48,12 +48,11 @@ Or, if you prefer to install from source (requires ``poetry``):
 
     The version number may change, so be sure to check the version number of the wheel file you build.
 
+Using The Pacakage
+==================
+
 Using ``ConnectionPlus`` As A Drop-In Replacement for ``Fabric``'s ``Connection``
-=================================================================================
-
-
-Create A Basic Connection As A Drop In Replacement
---------------------------------------------------
+---------------------------------------------------------------------------------
 
 If you want to create a connection, it is nearly identical to ``Fabric`` itself.
 
@@ -75,7 +74,7 @@ The only difference is if you want the drop-in replacement, you'll need to impor
 The following examples will work just as well regardless of naming it ``Connection`` or ``ConnectionPlus`` via the import.
 
 Using SCP instead of the default SFTP
---------------------------------------
+-------------------------------------
 
 By default the ``Connection`` object will use SFTP, and does not have the capacity to use SCP.
 
@@ -119,7 +118,7 @@ You can:
 Each is detailed below for clarity.
 
 Using an IP Address or URL
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------
 
 Here we will generate a ConnectionPlus object via a jumphost passed in as a string argument.
 
@@ -144,7 +143,7 @@ This is the only time that the ``jump_uname`` argument makes any sense, because 
     conn_c.run("date")
 
 Using an SSHClient-like object
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 So an ``SSHClient`` (or ``SSHJumpClient``, or anything else that inherits from the base ``SSHClient`` and behaves, roughly, similarly, will work) can be passed through as well.
 
@@ -182,7 +181,7 @@ Let us do the latter example:
     conn_d.run("date")
 
 Using a Connection-like object
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------
 
 Similar to above, you may also pass in a ``Connection``-derived object.
 
