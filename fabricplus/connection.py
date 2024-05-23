@@ -33,7 +33,7 @@ class ConnectionPlus(Connection):
     def __init__(self,
                  *args,
                  jumphost_target: Optional[Union[Client, str, Conn]] = None,
-                 scp: bool = False,
+                 scp: Optional[bool] = None,
                  jump_uname: Optional[str] = None,
                  jump_port: Optional[int] = None,
                  **kwargs):
@@ -65,7 +65,7 @@ class ConnectionPlus(Connection):
         """
         super().__init__(*args, **kwargs)
         self._scp: Optional[SCPClient] = None
-        self.__scp: bool = scp
+        self.__scp: Optional[bool] = scp
         self.client: Optional[Client] = self.__client_setup(jumphost_target=jumphost_target,
                                           jump_uname=jump_uname,
                                           jump_port=jump_port)
@@ -333,8 +333,8 @@ class ConnectionPlus(Connection):
         :return: Result object from the transfer, or None.
         :rtype: Optional[fabric.transfer.Result]
         """
-        _scp: bool = kwargs.pop("scp", None) or self.__scp
-        if _scp is True:
+        _scp: Optional[bool] = kwargs.pop("scp", None) or self.__scp
+        if _scp is not None and _scp is True:
             TransferPlus(self).get(*args, **kwargs)
             return None
         else:
@@ -352,8 +352,8 @@ class ConnectionPlus(Connection):
         :return: Result object from the transfer.
         :rtype: Optional[fabric.transfer.Result]
         """
-        _scp: bool = kwargs.pop("scp", None) or self.__scp
-        if _scp is True:
+        _scp: Optional[bool] = kwargs.pop("scp", None) or self.__scp
+        if _scp is not None and _scp is True:
             TransferPlus(self).put(*args, **kwargs)
             return None
         else:
