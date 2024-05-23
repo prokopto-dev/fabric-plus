@@ -4,6 +4,8 @@
    :alt: PyPI - Python Version
 .. image:: https://img.shields.io/pypi/l/fabricplus
    :alt: PyPI - License
+.. image:: https://img.shields.io/badge/GitHub-FabricPlus-blue?style=flat&logo=github&link=https%3A%2F%2Fgithub.com%2Fprokopto-dev%2Ffabric-plus
+   :alt: Static Badge
 
 Welcome to FabricPlus's documentation!
 ======================================
