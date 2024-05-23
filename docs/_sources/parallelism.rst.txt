@@ -48,6 +48,7 @@ Here's an example of how one might use ``concurrent.futures`` to run multiple co
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [executor.submit(Connection, host) for host in hosts]
         tb: Optional[str] = None
+        tb_list: list[str] = []
         # the code below helps handle tracebacks and errors; 
         # with out it, silent failures may occur
         for future in concurrent.futures.as_completed(futures):
@@ -58,13 +59,18 @@ Here's an example of how one might use ``concurrent.futures`` to run multiple co
                 tb = traceback.format_exc()
             finally:
                 if tb:
-                    print(f"Error: {tb}")
+                    tb_list.append(tb)
+    
+    # If there are any errors, print them
+    for tb in tb_list:
+        print(f"Error: {tb}")
 
 
     # Now you can use the connections, presuming they worked
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [executor.submit(connection.run, "ls -l") for connection in connections]
         tb: Optional[str] = None
+        tb_list: list[str] = []
         for future in concurrent.futures.as_completed(futures):
             try:
                 tb = None
@@ -73,7 +79,11 @@ Here's an example of how one might use ``concurrent.futures`` to run multiple co
                 tb = traceback.format_exc()
             finally:
                 if tb:
-                    print(f"Error: {tb}")
+                    tb_list.append(tb)
+    
+    # If there are any errors, print them
+    for tb in tb_list:
+        print(f"Error: {tb}")
 
 
 Important Note on ``su`` In Parallelism
