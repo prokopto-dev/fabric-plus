@@ -71,7 +71,8 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </section>
 <section id="using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection">
 <h2>Using <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> As A Drop-In Replacement for <code class="docutils literal notranslate"><span class="pre">Fabric</span></code>’s <code class="docutils literal notranslate"><span class="pre">Connection</span></code><a class="headerlink" href="#using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection" title="Link to this heading">¶</a></h2>
-<p>### Create A Basic Connection As A Drop In Replacement</p>
+<section id="create-a-basic-connection-as-a-drop-in-replacement">
+<h3>Create A Basic Connection As A Drop In Replacement<a class="headerlink" href="#create-a-basic-connection-as-a-drop-in-replacement" title="Link to this heading">¶</a></h3>
 <p>If you want to create a connection, it is nearly identical to <code class="docutils literal notranslate"><span class="pre">Fabric</span></code> itself.</p>
 <p>The only difference is if you want the drop-in replacement, you’ll need to import the <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object as a <code class="docutils literal notranslate"><span class="pre">Connection</span></code>, as below.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span> <span class="k">as</span> <span class="n">Connection</span>
@@ -86,7 +87,9 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </pre></div>
 </div>
 <p>The following examples will work just as well regardless of naming it <code class="docutils literal notranslate"><span class="pre">Connection</span></code> or <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> via the import.</p>
-<p>### Using SCP instead of the default SFTP</p>
+</section>
+<section id="using-scp-instead-of-the-default-sftp">
+<h3>Using SCP instead of the default SFTP<a class="headerlink" href="#using-scp-instead-of-the-default-sftp" title="Link to this heading">¶</a></h3>
 <p>By default the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object will use SFTP, and does not have the capacity to use SCP.</p>
 <p>The former is true for <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> objects, but the latter is definitely not true.</p>
 <p>There are two ways to access SCP. First, to set it as the default method via an argument to the initializer.</p>
@@ -110,6 +113,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </pre></div>
 </div>
 </section>
+</section>
 <section id="connecting-via-a-jumphost">
 <h2>Connecting Via A Jumphost<a class="headerlink" href="#connecting-via-a-jumphost" title="Link to this heading">¶</a></h2>
 <p>There are several ways to specify the jumphost you wish to connect through. There are benefits and drawbacks to each approach.</p>
@@ -120,7 +124,6 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 <li><p>Pass in a <code class="docutils literal notranslate"><span class="pre">Connection</span></code>-like object</p></li>
 </ul>
 <p>Each is detailed below for clarity.</p>
-<p>#### Using an IP Address or URL</p>
 <p>Here we will generate a ConnectionPlus object via a jumphost passed in as a string argument.</p>
 <p>The example could as easily be done with an IP address in the format <code class="docutils literal notranslate"><span class="pre">XXX.XXX.XXX.XXX</span></code>, where <code class="docutils literal notranslate"><span class="pre">X</span></code> is an integer, and <code class="docutils literal notranslate"><span class="pre">XXX</span></code> is together an integer no larger than <code class="docutils literal notranslate"><span class="pre">255</span></code>.</p>
 <p>In the example, we will also be using some other user name to log into the jumphost.</p>
@@ -138,7 +141,6 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 <span class="n">conn_c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>#### Using an SSHClient-like object</p>
 <p>So an <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code> (or <code class="docutils literal notranslate"><span class="pre">SSHJumpClient</span></code>, or anything else that inherits from the base <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code> and behaves, roughly, similarly, will work) can be passed through as well.</p>
 <p>This is useful for two cases:</p>
 <ol class="arabic simple">
@@ -171,7 +173,6 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 <span class="n">conn_d</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>#### Using a Connection-like object</p>
 <p>Similar to above, you may also pass in a <code class="docutils literal notranslate"><span class="pre">Connection</span></code>-derived object.</p>
 <p>All this does is have the back end extract the <code class="docutils literal notranslate"><span class="pre">client</span></code> from that <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object, and so essentially behaves as above, but the example below should work.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
