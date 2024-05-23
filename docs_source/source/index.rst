@@ -1,3 +1,10 @@
+.. image:: https://img.shields.io/pypi/v/fabricplus
+   :alt: PyPI - Version
+.. image:: https://img.shields.io/pypi/pyversions/fabricplus
+   :alt: PyPI - Python Version
+.. image:: https://img.shields.io/pypi/l/fabricplus
+   :alt: PyPI - License
+
 Welcome to FabricPlus's documentation!
 ======================================
 
@@ -15,10 +22,13 @@ What is FabricPlus?
 FabricPlus is a wrapper around several Fabric sourced objects to provide new functionality not currently a part of the main Fabric library.  This includes:
 
 - ``ConnectionPlus`` object that wraps the ``Connection`` object from Fabric and extends it with:
+  
   - Built-in support for ``jumphost`` (a.k.a. ``bastion``) connectivity with ``MFA`` / ``2FA`` support  via `paramiko-jump <https://github.com/andrewschenck/paramiko-jump>`_.
   - Built-in support for ``scp`` protocol transfer via the ``ssh`` connection, via `scp.py <https://github.com/jbardin/scp.py>_`.
   - Added support for ``su`` command execution via the ``Connection`` object for user switching, instead of needing to use ``sudo``.
+
 - ``TransferPlus`` object that wraps the ``Transfer`` object from Fabric and extends it with:
+  
   - Built-in support for ``scp`` protocol transfer via the ``ssh`` transport used by the parent ``Connection``.
 
 .. _getting_started:

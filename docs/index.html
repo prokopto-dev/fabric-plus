@@ -32,7 +32,10 @@
 
           <div class="body" role="main">
             
-  <section id="welcome-to-fabricplus-s-documentation">
+  <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/fabricplus" />
+<img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/fabricplus" />
+<img alt="PyPI - License" src="https://img.shields.io/pypi/l/fabricplus" />
+<section id="welcome-to-fabricplus-s-documentation">
 <h1>Welcome to FabricPlus’s documentation!<a class="headerlink" href="#welcome-to-fabricplus-s-documentation" title="Link to this heading">¶</a></h1>
 <p>This site covers FabricPlus’s usage and API documentation.</p>
 <p>It also serves as the main website for FabricPlus</p>
@@ -42,12 +45,18 @@
 <h2>What is FabricPlus?<a class="headerlink" href="#what-is-fabricplus" title="Link to this heading">¶</a></h2>
 <p>FabricPlus is a wrapper around several Fabric sourced objects to provide new functionality not currently a part of the main Fabric library.  This includes:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object that wraps the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object from Fabric and extends it with:
-- Built-in support for <code class="docutils literal notranslate"><span class="pre">jumphost</span></code> (a.k.a. <code class="docutils literal notranslate"><span class="pre">bastion</span></code>) connectivity with <code class="docutils literal notranslate"><span class="pre">MFA</span></code> / <code class="docutils literal notranslate"><span class="pre">2FA</span></code> support  via <a class="reference external" href="https://github.com/andrewschenck/paramiko-jump">paramiko-jump</a>.
-- Built-in support for <code class="docutils literal notranslate"><span class="pre">scp</span></code> protocol transfer via the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> connection, via <cite>scp.py &lt;https://github.com/jbardin/scp.py&gt;_</cite>.
-- Added support for <code class="docutils literal notranslate"><span class="pre">su</span></code> command execution via the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object for user switching, instead of needing to use <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TransferPlus</span></code> object that wraps the <code class="docutils literal notranslate"><span class="pre">Transfer</span></code> object from Fabric and extends it with:
-- Built-in support for <code class="docutils literal notranslate"><span class="pre">scp</span></code> protocol transfer via the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> transport used by the parent <code class="docutils literal notranslate"><span class="pre">Connection</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object that wraps the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object from Fabric and extends it with:</p>
+<ul>
+<li><p>Built-in support for <code class="docutils literal notranslate"><span class="pre">jumphost</span></code> (a.k.a. <code class="docutils literal notranslate"><span class="pre">bastion</span></code>) connectivity with <code class="docutils literal notranslate"><span class="pre">MFA</span></code> / <code class="docutils literal notranslate"><span class="pre">2FA</span></code> support  via <a class="reference external" href="https://github.com/andrewschenck/paramiko-jump">paramiko-jump</a>.</p></li>
+<li><p>Built-in support for <code class="docutils literal notranslate"><span class="pre">scp</span></code> protocol transfer via the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> connection, via <cite>scp.py &lt;https://github.com/jbardin/scp.py&gt;_</cite>.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">su</span></code> command execution via the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object for user switching, instead of needing to use <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TransferPlus</span></code> object that wraps the <code class="docutils literal notranslate"><span class="pre">Transfer</span></code> object from Fabric and extends it with:</p>
+<ul>
+<li><p>Built-in support for <code class="docutils literal notranslate"><span class="pre">scp</span></code> protocol transfer via the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> transport used by the parent <code class="docutils literal notranslate"><span class="pre">Connection</span></code>.</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="getting-started">
