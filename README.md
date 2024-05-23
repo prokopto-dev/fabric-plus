@@ -2,7 +2,7 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fabricplus)
 ![PyPI - License](https://img.shields.io/pypi/l/fabricplus)
 
-# Fabric-Plus
+# FabricPlus
 
 A drop-in expansion of features in the Fabric library.
 
