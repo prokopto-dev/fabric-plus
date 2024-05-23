@@ -24,7 +24,7 @@ FabricPlus is a wrapper around several Fabric sourced objects to provide new fun
 - ``ConnectionPlus`` object that wraps the ``Connection`` object from Fabric and extends it with:
   
   - Built-in support for ``jumphost`` (a.k.a. ``bastion``) connectivity with ``MFA`` / ``2FA`` support  via `paramiko-jump <https://github.com/andrewschenck/paramiko-jump>`_.
-  - Built-in support for ``scp`` protocol transfer via the ``ssh`` connection, via `scp.py <https://github.com/jbardin/scp.py>_`.
+  - Built-in support for ``scp`` protocol transfer via the ``ssh`` connection, via `scp.py <https://github.com/jbardin/scp.py>`_.
   - Added support for ``su`` command execution via the ``Connection`` object for user switching, instead of needing to use ``sudo``.
 
 - ``TransferPlus`` object that wraps the ``Transfer`` object from Fabric and extends it with:
