@@ -154,6 +154,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 <p>Let us do the latter example:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
 <span class="kn">from</span> <span class="nn">fabricplus.paramiko_modifications.client</span> <span class="kn">import</span> <span class="n">SSHJumpClient</span>
+<span class="kn">from</span> <span class="nn">paramiko.client</span> <span class="kn">import</span> <span class="n">WarningPolicy</span>
 
 <span class="c1"># Creating the client object</span>
 <span class="n">jumphost_client</span><span class="p">:</span> <span class="n">SSHJumpClient</span> <span class="o">=</span> <span class="n">SSHJumpClient</span><span class="p">()</span>
