@@ -105,7 +105,7 @@ You can also do it at the time of the call to ``put`` or ``get``, like so:
     conn_b.put("/path/to/some/local/file", "/path/on/the/remote", scp=True)
 
 Connecting Via A Jumphost
-=========================
+-------------------------
 
 There are several ways to specify the jumphost you wish to connect through. There are benefits and drawbacks to each approach.
 
@@ -118,7 +118,7 @@ You can:
 Each is detailed below for clarity.
 
 Using an IP Address or URL
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here we will generate a ConnectionPlus object via a jumphost passed in as a string argument.
 
@@ -143,7 +143,7 @@ This is the only time that the ``jump_uname`` argument makes any sense, because 
     conn_c.run("date")
 
 Using an SSHClient-like object
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 So an ``SSHClient`` (or ``SSHJumpClient``, or anything else that inherits from the base ``SSHClient`` and behaves, roughly, similarly, will work) can be passed through as well.
 
@@ -181,7 +181,7 @@ Let us do the latter example:
     conn_d.run("date")
 
 Using a Connection-like object
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Similar to above, you may also pass in a ``Connection``-derived object.
 

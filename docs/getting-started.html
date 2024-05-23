@@ -113,9 +113,8 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </pre></div>
 </div>
 </section>
-</section>
 <section id="connecting-via-a-jumphost">
-<h2>Connecting Via A Jumphost<a class="headerlink" href="#connecting-via-a-jumphost" title="Link to this heading">¶</a></h2>
+<h3>Connecting Via A Jumphost<a class="headerlink" href="#connecting-via-a-jumphost" title="Link to this heading">¶</a></h3>
 <p>There are several ways to specify the jumphost you wish to connect through. There are benefits and drawbacks to each approach.</p>
 <p>You can:</p>
 <ul class="simple">
@@ -125,7 +124,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </ul>
 <p>Each is detailed below for clarity.</p>
 <section id="using-an-ip-address-or-url">
-<h3>Using an IP Address or URL<a class="headerlink" href="#using-an-ip-address-or-url" title="Link to this heading">¶</a></h3>
+<h4>Using an IP Address or URL<a class="headerlink" href="#using-an-ip-address-or-url" title="Link to this heading">¶</a></h4>
 <p>Here we will generate a ConnectionPlus object via a jumphost passed in as a string argument.</p>
 <p>The example could as easily be done with an IP address in the format <code class="docutils literal notranslate"><span class="pre">XXX.XXX.XXX.XXX</span></code>, where <code class="docutils literal notranslate"><span class="pre">X</span></code> is an integer, and <code class="docutils literal notranslate"><span class="pre">XXX</span></code> is together an integer no larger than <code class="docutils literal notranslate"><span class="pre">255</span></code>.</p>
 <p>In the example, we will also be using some other user name to log into the jumphost.</p>
@@ -145,7 +144,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </div>
 </section>
 <section id="using-an-sshclient-like-object">
-<h3>Using an SSHClient-like object<a class="headerlink" href="#using-an-sshclient-like-object" title="Link to this heading">¶</a></h3>
+<h4>Using an SSHClient-like object<a class="headerlink" href="#using-an-sshclient-like-object" title="Link to this heading">¶</a></h4>
 <p>So an <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code> (or <code class="docutils literal notranslate"><span class="pre">SSHJumpClient</span></code>, or anything else that inherits from the base <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code> and behaves, roughly, similarly, will work) can be passed through as well.</p>
 <p>This is useful for two cases:</p>
 <ol class="arabic simple">
@@ -180,7 +179,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </div>
 </section>
 <section id="using-a-connection-like-object">
-<h3>Using a Connection-like object<a class="headerlink" href="#using-a-connection-like-object" title="Link to this heading">¶</a></h3>
+<h4>Using a Connection-like object<a class="headerlink" href="#using-a-connection-like-object" title="Link to this heading">¶</a></h4>
 <p>Similar to above, you may also pass in a <code class="docutils literal notranslate"><span class="pre">Connection</span></code>-derived object.</p>
 <p>All this does is have the back end extract the <code class="docutils literal notranslate"><span class="pre">client</span></code> from that <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object, and so essentially behaves as above, but the example below should work.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
@@ -202,6 +201,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 <span class="n">conn_d</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 </section>
@@ -231,7 +231,6 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 <li class="toctree-l2"><a class="reference internal" href="#a-note-about-imports">A Note About Imports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-pacakage">Using The Pacakage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#connecting-via-a-jumphost">Connecting Via A Jumphost</a></li>
 </ul>
 </li>
 </ul>
