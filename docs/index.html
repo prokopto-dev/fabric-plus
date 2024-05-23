@@ -59,14 +59,39 @@
 </li>
 </ul>
 </section>
+<section id="quickstart">
+<span id="id1"></span><h2>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">¶</a></h2>
+<p>If you’re looking to get started quickly, here’s a brief set of examples for usage. Otherwise, read the “Getting Started” section below.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># importing as Connection</span>
+<span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span> <span class="k">as</span> <span class="n">Connection</span>
+
+<span class="c1"># Creating a basic connection</span>
+<span class="n">conn_1</span><span class="p">:</span> <span class="n">Connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;host1.example.com&quot;</span><span class="p">)</span>
+
+<span class="c1"># Creating a jumphost connection, and then a host connection via that jumphost</span>
+<span class="n">jumphost_1</span><span class="p">:</span> <span class="n">Connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;jumphost.example.com&quot;</span><span class="p">)</span>
+<span class="n">conn_via_jh</span><span class="p">:</span> <span class="n">Connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;host2.example.com&quot;</span><span class="p">,</span> <span class="n">jump_target</span><span class="o">=</span><span class="n">jumphost_1</span><span class="p">)</span>
+
+<span class="c1"># Creating a host that uses SCP for transfers by default</span>
+<span class="n">conn_2</span><span class="p">:</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;host3.example.com&quot;</span><span class="p">,</span> <span class="n">scp</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Running a get via SCP on the host1/conn_1, which doesn&#39;t use SCP by default</span>
+<span class="n">conn_1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/path/to/some/remote/file&quot;</span><span class="p">,</span> <span class="n">scp</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Running a command as some other user via su</span>
+<span class="n">conn_1</span><span class="o">.</span><span class="n">su</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s2">&quot;someotheruser&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;someuserspasswd&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="getting-started">
-<span id="id1"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
+<span id="id2"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="getting-started.html#a-note-about-imports">A Note About Imports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting-started.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting-started.html#using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection">Using <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> As A Drop-In Replacement for <code class="docutils literal notranslate"><span class="pre">Fabric</span></code>’s <code class="docutils literal notranslate"><span class="pre">Connection</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#connecting-via-a-jumphost">Connecting Via A Jumphost</a></li>
 </ul>
 </li>
 </ul>
@@ -86,8 +111,8 @@
 </ul>
 </div>
 </section>
-<section id="id2">
-<h2>Contributing<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="id3">
+<h2>Contributing<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>Interested in contributing to FabricPlus?  Great!  We have a guide for that!</p>
 <div class="toctree-wrapper compound">
 <ul>
@@ -108,7 +133,7 @@
 </div>
 </section>
 <section id="contact">
-<span id="id3"></span><h2>Contact<a class="headerlink" href="#contact" title="Link to this heading">¶</a></h2>
+<span id="id4"></span><h2>Contact<a class="headerlink" href="#contact" title="Link to this heading">¶</a></h2>
 <p>If you need to get in touch about a bug, issue in the docs, or clarification, see the page below!</p>
 <div class="toctree-wrapper compound">
 <ul>

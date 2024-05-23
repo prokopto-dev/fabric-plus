@@ -71,7 +71,128 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </section>
 <section id="using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection">
 <h2>Using <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> As A Drop-In Replacement for <code class="docutils literal notranslate"><span class="pre">Fabric</span></code>’s <code class="docutils literal notranslate"><span class="pre">Connection</span></code><a class="headerlink" href="#using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection" title="Link to this heading">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object inherits nearly everything from the parent <code class="docutils literal notranslate"><span class="pre">Connection</span></code> class.</p>
+<p>### Create A Basic Connection As A Drop In Replacement</p>
+<p>If you want to create a connection, it is nearly identical to <code class="docutils literal notranslate"><span class="pre">Fabric</span></code> itself.</p>
+<p>The only difference is if you want the drop-in replacement, you’ll need to import the <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object as a <code class="docutils literal notranslate"><span class="pre">Connection</span></code>, as below.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span> <span class="k">as</span> <span class="n">Connection</span>
+
+<span class="n">conn</span><span class="p">:</span> <span class="n">Connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;some_host&quot;</span><span class="p">)</span>
+
+<span class="c1"># From here, you can do all the things you&#39;re used to, like run commands</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+
+<span class="c1"># But now you can also run an su command as well</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">su</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;otheruser&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;otheruserspassword&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following examples will work just as well regardless of naming it <code class="docutils literal notranslate"><span class="pre">Connection</span></code> or <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> via the import.</p>
+<p>### Using SCP instead of the default SFTP</p>
+<p>By default the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object will use SFTP, and does not have the capacity to use SCP.</p>
+<p>The former is true for <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> objects, but the latter is definitely not true.</p>
+<p>There are two ways to access SCP. First, to set it as the default method via an argument to the initializer.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
+
+<span class="c1"># Add in the scp=True</span>
+<span class="n">conn_a</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_host&quot;</span><span class="p">,</span> <span class="n">scp</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Then run a put command; it will run through SCP!</span>
+<span class="n">conn_a</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;/path/to/some/local/file&quot;</span><span class="p">,</span> <span class="s2">&quot;/path/on/the/remote&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also do it at the time of the call to <code class="docutils literal notranslate"><span class="pre">put</span></code> or <code class="docutils literal notranslate"><span class="pre">get</span></code>, like so:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
+
+<span class="c1"># leaving out scp=True</span>
+<span class="n">conn_b</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_host&quot;</span><span class="p">)</span>
+
+<span class="c1"># we run this with an scp=True arg.</span>
+<span class="n">conn_b</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;/path/to/some/local/file&quot;</span><span class="p">,</span> <span class="s2">&quot;/path/on/the/remote&quot;</span><span class="p">,</span> <span class="n">scp</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="connecting-via-a-jumphost">
+<h2>Connecting Via A Jumphost<a class="headerlink" href="#connecting-via-a-jumphost" title="Link to this heading">¶</a></h2>
+<p>There are several ways to specify the jumphost you wish to connect through. There are benefits and drawbacks to each approach.</p>
+<p>You can:</p>
+<ul class="simple">
+<li><p>Pass in a string for the URL or IP Address of the Jumphost you wish to target.</p></li>
+<li><p>Pass in an <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code>-like object</p></li>
+<li><p>Pass in a <code class="docutils literal notranslate"><span class="pre">Connection</span></code>-like object</p></li>
+</ul>
+<p>Each is detailed below for clarity.</p>
+<p>#### Using an IP Address or URL</p>
+<p>Here we will generate a ConnectionPlus object via a jumphost passed in as a string argument.</p>
+<p>The example could as easily be done with an IP address in the format <code class="docutils literal notranslate"><span class="pre">XXX.XXX.XXX.XXX</span></code>, where <code class="docutils literal notranslate"><span class="pre">X</span></code> is an integer, and <code class="docutils literal notranslate"><span class="pre">XXX</span></code> is together an integer no larger than <code class="docutils literal notranslate"><span class="pre">255</span></code>.</p>
+<p>In the example, we will also be using some other user name to log into the jumphost.</p>
+<p>This is the only time that the <code class="docutils literal notranslate"><span class="pre">jump_uname</span></code> argument makes any sense, because in all other cases, the host is already logged in via a user.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
+
+<span class="n">jumphost_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;jumphost.example.com&quot;</span>
+
+<span class="c1"># create the connection object, passing in the URL and a username for the jumphost</span>
+<span class="n">conn_c</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_host&quot;</span><span class="p">,</span>
+                                        <span class="n">jumphost_target</span><span class="o">=</span><span class="n">jumphost_url</span><span class="p">,</span>
+                                        <span class="n">jump_uname</span><span class="o">=</span><span class="s2">&quot;jumphost_username&quot;</span><span class="p">)</span>
+
+<span class="c1"># from here, you can simply run all your commands on the target host via the standard processes</span>
+<span class="n">conn_c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>#### Using an SSHClient-like object</p>
+<p>So an <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code> (or <code class="docutils literal notranslate"><span class="pre">SSHJumpClient</span></code>, or anything else that inherits from the base <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code> and behaves, roughly, similarly, will work) can be passed through as well.</p>
+<p>This is useful for two cases:</p>
+<ol class="arabic simple">
+<li><p>You want to control some more behaviors about how the <code class="docutils literal notranslate"><span class="pre">SSHClient</span></code> connections</p></li>
+<li><p>You want to proxy multiple connections VIA the same jumphost connection</p></li>
+</ol>
+<p>Let us do the latter example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
+<span class="kn">from</span> <span class="nn">fabricplus.paramiko_modifications.client</span> <span class="kn">import</span> <span class="n">SSHJumpClient</span>
+
+<span class="c1"># Creating the client object</span>
+<span class="n">jumphost_client</span><span class="p">:</span> <span class="n">SSHJumpClient</span> <span class="o">=</span> <span class="n">SSHJumpClient</span><span class="p">()</span>
+<span class="c1"># Doing some back end stuff for host key handling, because it&#39;s often necessary</span>
+<span class="n">jumphost_client</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">WarningPolicy</span><span class="p">())</span>
+<span class="n">jumphost_client</span><span class="o">.</span><span class="n">load_system_host_keys</span><span class="p">()</span>
+<span class="c1"># then connecting</span>
+<span class="n">jumphost_client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;some_jumphost_url&quot;</span><span class="p">)</span>
+
+<span class="c1"># create the connection object, passing in the SSHJumpClient object</span>
+<span class="n">conn_c</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_host&quot;</span><span class="p">,</span>
+                                        <span class="n">jumphost_target</span><span class="o">=</span><span class="n">jumphost_client</span><span class="p">)</span>
+
+<span class="c1"># importantly you can REUSE the jumphost_client</span>
+<span class="n">conn_d</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_other_host&quot;</span><span class="p">,</span>
+                                        <span class="n">jumphost_target</span><span class="o">=</span><span class="n">jumphost_client</span><span class="p">)</span>
+
+<span class="c1"># from here, you can simply run all your commands on the target host</span>
+<span class="c1"># via the standard processes</span>
+<span class="n">conn_c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+<span class="n">conn_d</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>#### Using a Connection-like object</p>
+<p>Similar to above, you may also pass in a <code class="docutils literal notranslate"><span class="pre">Connection</span></code>-derived object.</p>
+<p>All this does is have the back end extract the <code class="docutils literal notranslate"><span class="pre">client</span></code> from that <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object, and so essentially behaves as above, but the example below should work.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabricplus.connection</span> <span class="kn">import</span> <span class="n">ConnectionPlus</span>
+
+<span class="c1"># Creating the client object</span>
+<span class="n">jumphost_connection</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_jumphost_url&quot;</span><span class="p">)</span>
+
+<span class="c1"># create the connection object, passing in the ConnectionPlus object</span>
+<span class="n">conn_c</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_host&quot;</span><span class="p">,</span>
+                                        <span class="n">jumphost_target</span><span class="o">=</span><span class="n">jumphost_connection</span><span class="p">)</span>
+
+<span class="c1"># importantly you can REUSE the jumphost_connection</span>
+<span class="n">conn_d</span><span class="p">:</span> <span class="n">ConnectionPlus</span> <span class="o">=</span> <span class="n">ConnectionPlus</span><span class="p">(</span><span class="s2">&quot;some_other_host&quot;</span><span class="p">,</span>
+                                        <span class="n">jumphost_target</span><span class="o">=</span><span class="n">jumphost_connection</span><span class="p">)</span>
+
+<span class="c1"># from here, you can simply run all your commands on the target host</span>
+<span class="c1"># via the standard processes</span>
+<span class="n">conn_c</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+<span class="n">conn_d</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -100,6 +221,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 <li class="toctree-l2"><a class="reference internal" href="#a-note-about-imports">A Note About Imports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection">Using <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> As A Drop-In Replacement for <code class="docutils literal notranslate"><span class="pre">Fabric</span></code>’s <code class="docutils literal notranslate"><span class="pre">Connection</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connecting-via-a-jumphost">Connecting Via A Jumphost</a></li>
 </ul>
 </li>
 </ul>
@@ -111,7 +233,7 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/client.html"><code class="docutils literal notranslate"><span class="pre">paramiko_modifications.client</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/client.html"><code class="docutils literal notranslate"><span class="pre">client</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/connection.html"><code class="docutils literal notranslate"><span class="pre">connection</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/transfer.html"><code class="docutils literal notranslate"><span class="pre">transfer</span></code></a></li>
 </ul>
