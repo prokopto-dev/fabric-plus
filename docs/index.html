@@ -41,6 +41,14 @@
 <section id="what-is-fabricplus">
 <h2>What is FabricPlus?<a class="headerlink" href="#what-is-fabricplus" title="Link to this heading">¶</a></h2>
 <p>FabricPlus is a wrapper around several Fabric sourced objects to provide new functionality not currently a part of the main Fabric library.  This includes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object that wraps the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object from Fabric and extends it with:
+- Built-in support for <code class="docutils literal notranslate"><span class="pre">jumphost</span></code> (a.k.a. <code class="docutils literal notranslate"><span class="pre">bastion</span></code>) connectivity with <code class="docutils literal notranslate"><span class="pre">MFA</span></code> / <code class="docutils literal notranslate"><span class="pre">2FA</span></code> support  via <a class="reference external" href="https://github.com/andrewschenck/paramiko-jump">paramiko-jump</a>.
+- Built-in support for <code class="docutils literal notranslate"><span class="pre">scp</span></code> protocol transfer via the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> connection, via <cite>scp.py &lt;https://github.com/jbardin/scp.py&gt;_</cite>.
+- Added support for <code class="docutils literal notranslate"><span class="pre">su</span></code> command execution via the <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object for user switching, instead of needing to use <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TransferPlus</span></code> object that wraps the <code class="docutils literal notranslate"><span class="pre">Transfer</span></code> object from Fabric and extends it with:
+- Built-in support for <code class="docutils literal notranslate"><span class="pre">scp</span></code> protocol transfer via the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> transport used by the parent <code class="docutils literal notranslate"><span class="pre">Connection</span></code>.</p></li>
+</ul>
 </section>
 <section id="getting-started">
 <span id="id1"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
@@ -48,6 +56,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="getting-started.html#a-note-about-imports">A Note About Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection">Using <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> As A Drop-In Replacement for <code class="docutils literal notranslate"><span class="pre">Fabric</span></code>’s <code class="docutils literal notranslate"><span class="pre">Connection</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -101,14 +111,6 @@
 </ul>
 </div>
 </section>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
 </section>
 
 

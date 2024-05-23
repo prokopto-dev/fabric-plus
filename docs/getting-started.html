@@ -46,6 +46,33 @@ for more information on the base <code class="docutils literal notranslate"><spa
 <p>But you may want to modify the behavior of underlying objects, or use them directly.</p>
 <p>In this case, importing and using objects from <code class="docutils literal notranslate"><span class="pre">paramiko</span></code>, or <code class="docutils literal notranslate"><span class="pre">invoke</span></code>, just as in the base <code class="docutils literal notranslate"><span class="pre">Fabric</span></code> library, is still possible.</p>
 </section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p>As of <code class="docutils literal notranslate"><span class="pre">FabricPlus</span></code> version 0.1.0, the library is available on PyPI at the <a class="reference external" href="https://pypi.org/project/fabricplus/">FabricPlus Project Page</a>.</p>
+<p>To install <code class="docutils literal notranslate"><span class="pre">FabricPlus</span></code>, simply run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>fabricplus
+</pre></div>
+</div>
+<p>Or, if you prefer to install from source (requires <code class="docutils literal notranslate"><span class="pre">poetry</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/prokopto-dev/fabric-plus.git
+<span class="c1"># Go into the directory</span>
+<span class="nb">cd</span><span class="w"> </span>fabric-plus
+<span class="c1"># Run the poetry build command</span>
+poetry<span class="w"> </span>build
+<span class="c1"># Install the newly built wheel file</span>
+pip<span class="w"> </span>install<span class="w"> </span>dist/fabricplus-0.1.0-py3-none-any.whl
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The version number may change, so be sure to check the version number of the wheel file you build.</p>
+</div>
+</section>
+<section id="using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> As A Drop-In Replacement for <code class="docutils literal notranslate"><span class="pre">Fabric</span></code>’s <code class="docutils literal notranslate"><span class="pre">Connection</span></code><a class="headerlink" href="#using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> object inherits nearly everything from the parent <code class="docutils literal notranslate"><span class="pre">Connection</span></code> class.</p>
+</section>
 </section>
 
 
@@ -71,6 +98,8 @@ for more information on the base <code class="docutils literal notranslate"><spa
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#a-note-about-imports">A Note About Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-connectionplus-as-a-drop-in-replacement-for-fabric-s-connection">Using <code class="docutils literal notranslate"><span class="pre">ConnectionPlus</span></code> As A Drop-In Replacement for <code class="docutils literal notranslate"><span class="pre">Fabric</span></code>’s <code class="docutils literal notranslate"><span class="pre">Connection</span></code></a></li>
 </ul>
 </li>
 </ul>
