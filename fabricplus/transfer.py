@@ -2,7 +2,7 @@ import fabric
 from fabric.transfer import Transfer
 import scp
 
-from typing import Union, TypeVar
+from typing import TypeVar
 
 # Type hint for a fabric Connection object.
 Conn = TypeVar("Conn", bound=fabric.connection.Connection)

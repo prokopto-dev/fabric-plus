@@ -16,7 +16,7 @@ from fabricplus.paramiko_modifications.client import SSHJumpClient, simple_auth_
 from typing import Optional, Union, Callable, List, Any, AnyStr, TYPE_CHECKING, TypeVar
 from paramiko.channel import ChannelFile, ChannelStderrFile
 if TYPE_CHECKING:
-    from invoke.runners import Runner, Result
+    from invoke.runners import Runner, Result # pragma: no cover
 
 # Type Variable For Connection-Like objects
 Conn = TypeVar("Conn", bound=Connection, covariant=True)

@@ -109,8 +109,4 @@ TODO
 ----
 
 - [ ] Add some unit testing
-- [ ] Move and expand quick start info
-- [ ] Add installation instructions to README.md
-- [ ] Port over some more functionality from `scp.py`, maybe remove requirement for the library itself by imported all functionality
 - [ ] Define version compatibility for Fabric/Invoke/Paramiko
-- [ ] Ensure `Fab CLI Tool` compatibility... hadn't considered that.

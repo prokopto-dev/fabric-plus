@@ -1,5 +1,7 @@
 .vscode
 .pyc
+.coverage
+coverage.xml
 __pycache__
 build
 dist
