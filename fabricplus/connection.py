@@ -4,6 +4,7 @@ import fabric.transfer
 import re
 from invoke.watchers import FailingResponder, Responder
 from paramiko import WarningPolicy, SSHClient, Transport
+from invoke.runners import Result
 
 from scp import SCPClient
 from invoke.exceptions import Failure, ResponseNotAccepted, AuthFailure
@@ -16,7 +17,7 @@ from fabricplus.paramiko_modifications.client import SSHJumpClient, simple_auth_
 from typing import Optional, Union, Callable, List, Any, AnyStr, TYPE_CHECKING, TypeVar
 from paramiko.channel import ChannelFile, ChannelStderrFile
 if TYPE_CHECKING:
-    from invoke.runners import Runner, Result # pragma: no cover
+    from invoke.runners import Runner # pragma: no cover
 
 # Type Variable For Connection-Like objects
 Conn = TypeVar("Conn", bound=Connection, covariant=True)
@@ -338,7 +339,9 @@ class ConnectionPlus(Connection):
             TransferPlus(self).get(*args, **kwargs)
             return None
         else:
-            return super().get(*args, **kwargs)
+            # not covering this, as its just a call to the base version and is covered by
+            # fabric's base tests.
+            return super().get(*args, **kwargs) # pragma: no cover
         
         
     def put(self, *args, **kwargs) -> Optional[fabric.transfer.Result]:
@@ -357,4 +360,6 @@ class ConnectionPlus(Connection):
             TransferPlus(self).put(*args, **kwargs)
             return None
         else:
-            return super().put(*args, **kwargs)
+            # not covering this, as its just a call to the base version and is covered by
+            # fabric's base tests.
+            return super().put(*args, **kwargs) #pragma: no cover
