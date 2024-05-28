@@ -39,7 +39,7 @@ pytest-mock = "^3.14.0"
 mypy = "^1.10.0"
 
 [tool.pytest.ini_options]
-addopts = "-v --cov=fabricplus --cov-report=term-missing --cov-report=xml"
+addopts = "-v --cov=fabricplus --cov-report=term-missing --cov-report=xml --cov-config=.coveragerc"
 
 [build-system]
 requires = ["poetry-core"]
