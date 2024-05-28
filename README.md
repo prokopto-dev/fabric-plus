@@ -18,6 +18,11 @@ See the API documentation on the [FabricPlus Website](https://fabricplus.prokopt
 
 See [`fabric`](https://github.com/fabric/fabric) for more details on the base `fabric` library, if interested in the underlying behaviors. Some have been changed: see Important Changes and the documentation for more information.
 
+## Note On Changelogs
+
+- Changelog will be implemented AFTER 1.0, given that 1.0 was considered MVP and all features should be stable.
+- Docs will continue to be updated throughout, inbetween release versions.
+
 ## Installation
 
 ### pip (via PyPI)
@@ -86,28 +91,8 @@ conn_1.get("/path/to/some/remote/file", scp=True)
 conn_1.su("date", user="someotheruser", password="someuserspasswd")
 ```
 
-## Timeline
-
-
-- [x] Finish initial feature builds with
-  - Interopability with base `Connection`
-  - Added `paramiko-jump` compatibility
-  - Added `scp` compatibility
-  - Added `su` compatibility
-- [x] Finish typing, docstrings, and consistency checks
-- [x] Set up auto-generating documentation
-- [ ] Set up automated unit testing
-- [ ] Set up automated building
-- [ ] Publish 1.0 to PyPI
-
 License Addendum
 ----------------
 - [`scp.py`](https://github.com/jbardin/scp.py) is used by import under the LGPL v2.1 license, and this notice is in accordance with that license.
 - [`paramiko-jump`](https://github.com/andrewschenck/paramiko-jump) used under Apache License 2.0, see `fabricplus/paramiko_modifications/client.py` for license details.
 - [`fabric`](https://github.com/fabric/fabric) is used, and falls under a BSD-2-Clause license, which doesn't restrict its use as an imported library, but is noted here anyways.
-
-TODO
-----
-
-- [ ] Add some unit testing
-- [ ] Define version compatibility for Fabric/Invoke/Paramiko
