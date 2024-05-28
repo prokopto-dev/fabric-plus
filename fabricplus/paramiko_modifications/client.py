@@ -47,15 +47,15 @@ class SSHJumpClient(SSHClient):
     """
 
     def __init__(
-            self,
-            *,
-            jump_session: Optional[SSHClient] = None,
-            auth_handler: Optional[Callable] = None,
+        self,
+        *,
+        jump_session: Optional[SSHClient] = None,
+        auth_handler: Optional[Callable] = None,
     ) -> None:
         """
         SSHJumpClient constructor, which is a subclass of
         paramiko.client.SSHClient.
-        
+
         :param jump_session:
             If provided, proxy SSH connections through the another
             instance of SSHClient.
@@ -69,8 +69,8 @@ class SSHJumpClient(SSHClient):
         super().__init__()
         self._jump_session: Optional[SSHClient] = jump_session
         j: Optional[SSHClient] = self._jump_session
-        if j is not None and not hasattr(j, '_transport'):
-            raise TypeError(f'bad jump_session: {j}')
+        if j is not None and not hasattr(j, "_transport"):
+            raise TypeError(f"bad jump_session: {j}")
         self._auth_handler: Optional[Callable[..., Any]] = auth_handler
 
     def __repr__(self) -> str:
@@ -79,9 +79,11 @@ class SSHJumpClient(SSHClient):
         :return: The class name and the jump session and auth handler.
         :rtype: str
         """
-        return (f'{self.__class__.__name__}('
-                f'jump_session={self._jump_session!r}, '
-                f'auth_handler={self._auth_handler!r})')
+        return (
+            f"{self.__class__.__name__}("
+            f"jump_session={self._jump_session!r}, "
+            f"auth_handler={self._auth_handler!r})"
+        )
 
     def __str__(self) -> str:
         """String representation of the object.
@@ -92,25 +94,25 @@ class SSHJumpClient(SSHClient):
         return self.__class__.__name__
 
     def _auth(
-            self,
-            username: AnyStr,
-            password: Optional[AnyStr] = None,
-            pkey: Optional[PKey] = None,
-            key_filenames: Optional[AnyStr] = None,
-            allow_agent: bool = True,
-            look_for_keys: bool = True,
-            gss_auth: bool = False,
-            gss_kex: bool = False,
-            gss_deleg_creds: bool = True,
-            gss_host: Optional[AnyStr] = None,
-            passphrase: Optional[AnyStr] = None,
+        self,
+        username: AnyStr,
+        password: Optional[AnyStr] = None,
+        pkey: Optional[PKey] = None,
+        key_filenames: Optional[AnyStr] = None,
+        allow_agent: bool = True,
+        look_for_keys: bool = True,
+        gss_auth: bool = False,
+        gss_kex: bool = False,
+        gss_deleg_creds: bool = True,
+        gss_host: Optional[AnyStr] = None,
+        passphrase: Optional[AnyStr] = None,
     ) -> None:  # pylint: disable=R0913
         """
         Authenticate to the server.
-        
-        :param username: 
+
+        :param username:
             Username to authenticate with.
-        :param password: 
+        :param password:
             Password to authenticate with, defaults to None
         :param pkey:
             Private key file to use for authentication, defaults to None
@@ -136,12 +138,12 @@ class SSHJumpClient(SSHClient):
         if callable(self._auth_handler):
             # Ignore type issues here, as the super class does
             # not share _transport information (which is private)
-            return self._transport.auth_interactive( # type: ignore
+            return self._transport.auth_interactive(  # type: ignore
                 username=username,
                 handler=self._auth_handler,
             )
 
-        return super()._auth( # type: ignore
+        return super()._auth(  # type: ignore
             username=username,
             password=password,
             pkey=pkey,
@@ -156,32 +158,32 @@ class SSHJumpClient(SSHClient):
         )
 
     def connect(
-            self,
-            hostname: str,
-            port: int = SSH_PORT,
-            username: Optional[str] = None,
-            password: Optional[str] = None,
-            pkey: Optional[PKey] = None,
-            key_filename: Optional[str] = None,
-            timeout: Optional[int] = None,
-            allow_agent: bool = True,
-            look_for_keys: bool = True,
-            compress: bool = False,
-            sock: Optional[socket] = None,
-            gss_auth: bool = False,
-            gss_kex: bool = False,
-            gss_deleg_creds: bool = True,
-            gss_host: Optional[str] = None,
-            banner_timeout: Optional[int] = None,
-            auth_timeout: Optional[int] = None,
-            gss_trust_dns: bool = True,
-            passphrase: Optional[str] = None,
-            disabled_algorithms: Optional[Dict[str, List[str]]] = None,
+        self,
+        hostname: str,
+        port: int = SSH_PORT,
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+        pkey: Optional[PKey] = None,
+        key_filename: Optional[str] = None,
+        timeout: Optional[int] = None,
+        allow_agent: bool = True,
+        look_for_keys: bool = True,
+        compress: bool = False,
+        sock: Optional[socket] = None,
+        gss_auth: bool = False,
+        gss_kex: bool = False,
+        gss_deleg_creds: bool = True,
+        gss_host: Optional[str] = None,
+        banner_timeout: Optional[int] = None,
+        auth_timeout: Optional[int] = None,
+        gss_trust_dns: bool = True,
+        passphrase: Optional[str] = None,
+        disabled_algorithms: Optional[Dict[str, List[str]]] = None,
     ) -> None:  # pylint: disable=R0913,R0914
         """
         Connect to an SSH server and authenticate to it.
 
-        :param hostname: 
+        :param hostname:
             Hostname or IP address of the remote host.
         :param port:
             Port number of the remote host, defaults to SSH_PORT (22)
@@ -229,11 +231,12 @@ class SSHJumpClient(SSHClient):
         """
         if self._jump_session is not None:
             if sock is not None:
-                raise ValueError('jump_session= and sock= are mutually '
-                                 'exclusive')
-            transport = self._jump_session._transport  # pylint: disable=W0212 # type: ignore
+                raise ValueError("jump_session= and sock= are mutually " "exclusive")
+            transport = (
+                self._jump_session._transport
+            )  # pylint: disable=W0212 # type: ignore
             sock = transport.open_channel(
-                kind='direct-tcpip',
+                kind="direct-tcpip",
                 dest_addr=(hostname, port),
                 src_addr=transport.getpeername(),
                 timeout=timeout,
@@ -296,12 +299,12 @@ class DummyAuthHandler:
 
 @contextmanager
 def jump_host(
-        hostname: AnyStr,
-        username: AnyStr,
-        password: AnyStr,
-        auth_handler: Optional[Callable[..., Any]] = None,
-        look_for_keys: bool = True,
-        auto_add_missing_key_policy: bool = False,
+    hostname: AnyStr,
+    username: AnyStr,
+    password: AnyStr,
+    auth_handler: Optional[Callable[..., Any]] = None,
+    look_for_keys: bool = True,
+    auto_add_missing_key_policy: bool = False,
 ) -> Iterator:  # pylint: disable=R0913
     """
 
@@ -358,9 +361,9 @@ def jump_host(
 
 
 def simple_auth_handler(
-        title: AnyStr,
-        instructions: AnyStr,
-        prompt_list: Sequence[_Prompt],
+    title: AnyStr,
+    instructions: AnyStr,
+    prompt_list: Sequence[_Prompt],
 ) -> List[AnyStr]:
     """
     Authentication callback, for keyboard-interactive
@@ -389,7 +392,7 @@ def simple_auth_handler(
 
     for prompt, show_input in prompt_list:
         input_ = input if show_input else getpass
-        answers.append(input_(prompt)) # type: ignore
+        answers.append(input_(prompt))  # type: ignore
     return answers
 
 

@@ -7,13 +7,13 @@ from typing import TypeVar
 # Type hint for a fabric Connection object.
 Conn = TypeVar("Conn", bound=fabric.connection.Connection)
 
+
 class TransferPlus(Transfer):
     """TransferPlus is a subclass of the base fabric Transfer object, overloading
     the parent object to provide additional functionality for SCP transfers.
     """
 
-    def __init__(self,
-                 connection: Conn) -> None:
+    def __init__(self, connection: Conn) -> None:
         """Initializes the TransferPlus object.
 
         :param connection: A fabric Connection-like object.
@@ -31,12 +31,14 @@ class TransferPlus(Transfer):
         try:
             return self.connection.scp()
         except AttributeError:
-            raise AttributeError("The base fabric Connection object does not have an SCP client"
-                                 ", use ConnectionPlus instead.")
-    
+            raise AttributeError(
+                "The base fabric Connection object does not have an SCP client"
+                ", use ConnectionPlus instead."
+            )
+
     def get(self, *args, **kwargs) -> None:
         """Get a file from the remote host.
-        
+
         :param remote_path: The path to the file on the remote host.
         :param local_path: The path to save the file locally. Defaults to current working dir.
         :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
@@ -46,10 +48,10 @@ class TransferPlus(Transfer):
         :rtype: None
         """
         return self.scp.get(*args, **kwargs)
-    
+
     def put(self, *args, **kwargs) -> None:
         """Put a file on the remote host.
-        
+
         :param local_path: The path to the file on the local host.
         :param remote_path: The path to save the file remotely. Defaults to current working dir for the session.
         :param scp: If the transfer should be done via SCP. Defaults to False or the Connection value.
