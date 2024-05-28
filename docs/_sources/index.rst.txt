@@ -1,6 +1,9 @@
 .. image:: https://img.shields.io/pypi/v/fabricplus
    :alt: PyPI - Version
    :target: https://pypi.org/project/fabricplus/
+.. image:: https://img.shields.io/github/actions/workflow/status/prokopto-dev/fabric-plus/testing.yml?logo=github&label=testing
+   :alt: GitHub Actions Workflow Status
+   :target: https://github.com/prokopto-dev/fabric-plus/actions/
 .. image:: https://img.shields.io/pypi/pyversions/fabricplus
    :alt: PyPI - Python Version
    :target: https://pypi.org/project/fabricplus/

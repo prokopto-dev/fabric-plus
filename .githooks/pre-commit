@@ -1,3 +1,7 @@
+# Run black on all python files
+poetry run black fabricplus/
+poetry run black tests/
+
 # Build docs on commit
 
 sphinx-build docs_source/source docs/
