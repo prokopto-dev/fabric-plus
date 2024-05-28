@@ -1,0 +1,28 @@
+name: Publish ${package_name} to PyPI / GitHub
+
+on:
+  release:
+    types: [published]
+
+jobs:
+    build-n-publish:
+        name: Build and publish to PyPI
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup Python 3.10
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.10' 
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install poetry
+                poetry install
+            - name: Setup Key
+              run: |
+               poetry config pypi-token.pypi "${{ secrets.PYPI_API_KEY }}"
+            - name: Publish to PyPI
+              run: |
+                poetry publish --build
+            
