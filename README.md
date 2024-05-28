@@ -1,6 +1,7 @@
 ![PyPI - Version](https://img.shields.io/pypi/v/fabricplus)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fabricplus)
 ![PyPI - License](https://img.shields.io/pypi/l/fabricplus)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/prokopto-dev/fabric-plus/testing.yml?logo=github&label=testing)
 
 # FabricPlus
 
