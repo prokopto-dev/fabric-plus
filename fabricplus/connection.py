@@ -146,7 +146,7 @@ class ConnectionPlus(Connection):
         _prompt: str = "Password: "
         _command: str = self._prefix_commands(command)
         # Escape all double quotes in the command.
-        _cmd_str: str = f'su - {user} -Conn "{command}"'.format(
+        _cmd_str: str = f'su - {user} -c "{command}"'.format(
             user=user, command=_command.replace('"', '\\"')
         )
         _watcher: FailingResponder = FailingResponder(
