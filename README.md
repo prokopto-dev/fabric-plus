@@ -20,8 +20,9 @@ See [`fabric`](https://github.com/fabric/fabric) for more details on the base `f
 
 ## Note On Changelogs
 
-- Changelog will be implemented AFTER 1.0, given that 1.0 was considered MVP and all features should be stable.
-- Docs will continue to be updated throughout, inbetween release versions.
+### v1.0.1
+
+- Bugfix: `su` command had an invalid argument when processing subcommands. Fixed.
 
 ## Installation
 
