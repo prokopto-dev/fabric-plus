@@ -83,7 +83,7 @@ jumphost_1: Connection = Connection("jumphost.example.com")
 conn_via_jh: Connection = Connection("host2.example.com", jump_target=jumphost_1)
 
 # Creating a host that uses SCP for transfers by default
-conn_2: Connection("host3.example.com", scp=True)
+conn_2: Connection = Connection("host3.example.com", scp=True)
 
 # Running a get via SCP on the host1/conn_1, which doesn't use SCP by default
 conn_1.get("/path/to/some/remote/file", scp=True)
